@@ -17,17 +17,23 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class NewSquareGame extends ApplicationAdapter implements InputProcessor {
     SpriteBatch batch;
     Sprite sprite;
-    Texture img;
+    Texture squareSprite;
+
     World world;
     Body body;
     Body bodyEdgeScreen;
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugMatrix;
     OrthographicCamera camera;
+
+    final float GRAVITY = -6.0f;
+    final float JUMPFORCE = 10.0f;
 
     float torque = 0.0f;
     boolean drawSprite = true;
@@ -36,13 +42,14 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
 	@Override
 	public void create () {
+
         batch = new SpriteBatch();
-        img = new Texture("square.png");
-        sprite = new Sprite(img);
+        squareSprite = new Texture("square.png");
+        sprite = new Sprite(squareSprite);
 
         sprite.setPosition(-sprite.getWidth()/2,-sprite.getHeight()/2);
 
-        world = new World(new Vector2(0, -9.8f),true);
+        world = new World(new Vector2(0, GRAVITY),true);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -159,7 +166,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        body.applyForceToCenter(0, 12.0f, true);
+        body.applyForceToCenter(0, JUMPFORCE, true);
         return true;
     }
 
