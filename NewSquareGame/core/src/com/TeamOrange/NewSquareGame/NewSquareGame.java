@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -23,6 +24,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     Texture img;
     World world;
     Body body;
+    Body bodyEdgeScreen;
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugMatrix;
     OrthographicCamera camera;
@@ -40,7 +42,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         sprite.setPosition(-sprite.getWidth()/2,-sprite.getHeight()/2);
 
-        world = new World(new Vector2(0, -3.0f),true);
+        world = new World(new Vector2(0, -9.8f),true);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -60,6 +62,25 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         body.createFixture(fixtureDef);
         shape.dispose();
+
+        BodyDef bodyDef2 = new BodyDef();
+        bodyDef2.type = BodyDef.BodyType.StaticBody;
+        float w = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
+        // Set the height to just 50 pixels above the bottom of the screen so we can see the edge in the
+        // debug renderer
+        float h = Gdx.graphics.getHeight()/PIXELS_TO_METERS- 50/PIXELS_TO_METERS;
+        //bodyDef2.position.set(0,
+//                h-10/PIXELS_TO_METERS);
+        bodyDef2.position.set(0,0);
+        FixtureDef fixtureDef2 = new FixtureDef();
+
+        EdgeShape edgeShape = new EdgeShape();
+        edgeShape.set(-w/2,-h/2,w/2,-h/2);
+        fixtureDef2.shape = edgeShape;
+
+        bodyEdgeScreen = world.createBody(bodyDef2);
+        bodyEdgeScreen.createFixture(fixtureDef2);
+        edgeShape.dispose();
 
         Gdx.input.setInputProcessor(this);
 
@@ -138,7 +159,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        body.applyForceToCenter(0, 5.0f, true);
+        body.applyForceToCenter(0, 12.0f, true);
         return true;
     }
 
