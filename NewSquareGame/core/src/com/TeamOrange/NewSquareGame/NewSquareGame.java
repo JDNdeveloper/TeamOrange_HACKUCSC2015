@@ -97,12 +97,12 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         float w = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
         float h = Gdx.graphics.getHeight()/PIXELS_TO_METERS- 50/PIXELS_TO_METERS;
 
-        bodyDef2.position.set(0,0);
+        bodyDef2.position.set(240/PIXELS_TO_METERS,0);
         FixtureDef fixtureDef2 = new FixtureDef();
 
 
         PolygonShape rect = new PolygonShape();
-        rect.setAsBox(1000 / PIXELS_TO_METERS, 20 / PIXELS_TO_METERS);
+        rect.setAsBox(480 / PIXELS_TO_METERS, 20 / PIXELS_TO_METERS);
         fixtureDef2.shape = rect;
 
         bodyEdgeScreen = world.createBody(bodyDef2);
@@ -165,7 +165,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         //System.out.println("square x: " + squareSprite.getX());
         //System.out.println("square y: " + squareSprite.getY());
 
-        batch.draw(squareSprite, 0, 0);
+        //batch.draw(squareSprite, 0, 0);
         //batch.draw(blueButton.getSprite(), blueButton.getSprite().getOriginX(), blueButton.getSprite().getOriginY());
         //batch.draw(pinkButton.getSprite(), pinkButton.getSprite().getOriginX(), pinkButton.getSprite().getOriginY());
         //batch.draw(greenButton.getSprite(), greenButton.getSprite().getOriginX(), greenButton.getSprite().getOriginY());
