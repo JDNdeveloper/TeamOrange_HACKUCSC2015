@@ -27,6 +27,11 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     Sprite squareSprite;
     Texture squareTexture;
 
+    ImageButton orangeButton;
+    ImageButton blueButton;
+    ImageButton pinkButton;
+    ImageButton greenButton;
+
     World world;
     Body body;
     Transform bodyPosition;
@@ -41,6 +46,9 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     final float GRAVITY = -6.0f;
     final float JUMPFORCE = 10.0f;
 
+    final float buttonPaddingX = 32;
+    final float buttonPaddingY = 32;
+
     float torque = 0.0f;
     boolean drawSprite = true;
 
@@ -48,6 +56,11 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
 	@Override
 	public void create () {
+        orangeButton = new ImageButton("orangeButton.png", buttonPaddingX, buttonPaddingY);
+        greenButton = new ImageButton("greenButton.png", buttonPaddingX + orangeButton.getWidth(), buttonPaddingY);
+        blueButton = new ImageButton("blueButton.png", screenWidth - buttonPaddingX - greenButton.getWidth(), buttonPaddingY); //bad...
+        pinkButton = new ImageButton("pinkButton.png", screenWidth - buttonPaddingX * 2 - blueButton.getWidth()*2, buttonPaddingY);
+
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
         jumpDir = new Vector2();
@@ -150,6 +163,11 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
                     squareSprite.getOriginY(),
                     squareSprite.getWidth(),squareSprite.getHeight(),squareSprite.getScaleX(),squareSprite.
                             getScaleY(),squareSprite.getRotation());
+
+        batch.draw(orangeButton.getTexture(), 0, 0);
+        //batch.draw(blueButton.getSprite(), blueButton.getSprite().getOriginX(), blueButton.getSprite().getOriginY());
+        //batch.draw(pinkButton.getSprite(), pinkButton.getSprite().getOriginX(), pinkButton.getSprite().getOriginY());
+        //batch.draw(greenButton.getSprite(), greenButton.getSprite().getOriginX(), greenButton.getSprite().getOriginY());
 
         batch.end();
 

@@ -16,17 +16,18 @@ public class ImageButton {
     float imageX;
     float imageY;
 
-    public ImageButton(String imageName, int iX, int iY) {
+    public ImageButton(String imageName, float iX, float iY) {
 
         imageX = iX;
         imageY = iY;
 
         image = new Texture(imageName);
         imageSprite = new Sprite(image);
-        imageSprite.setPosition(imageX, imageY);
+        imageSprite.setPosition(-imageSprite.getWidth()/2,-imageSprite.getHeight()/2);
+
     }
 
-    public boolean mouseWithinRegion(int X, int Y) {
+    public boolean mouseWithinRegion(float X, float Y) {
         mouseX = X;
         mouseY = Y;
 
@@ -39,4 +40,25 @@ public class ImageButton {
 
         return true;
     }
+
+    public float getWidth() {
+        return image.getWidth();
+    }
+
+    public float getHeight() {
+        return image.getHeight();
+    }
+
+    public Texture getTexture() {
+        return image;
+    }
+
+    public float getX() {
+        return imageX;
+    }
+
+    public float getY() {
+        return imageY;
+    }
+
 }
