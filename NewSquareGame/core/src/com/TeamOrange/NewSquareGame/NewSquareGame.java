@@ -76,9 +76,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set((squareSprite.getX() + squareSprite.getWidth()/2) /
-                        PIXELS_TO_METERS,
-                (squareSprite.getY() + squareSprite.getHeight()/2) / PIXELS_TO_METERS);
+        bodyDef.position.set((Gdx.graphics.getWidth()/2)/PIXELS_TO_METERS,(Gdx.graphics.getHeight()/2)/PIXELS_TO_METERS);
 
         body = world.createBody(bodyDef);
 
@@ -95,22 +93,21 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         BodyDef bodyDef2 = new BodyDef();
         bodyDef2.type = BodyDef.BodyType.StaticBody;
+
         float w = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
-        // Set the height to just 50 pixels above the bottom of the screen so we can see the edge in the
-        // debug renderer
         float h = Gdx.graphics.getHeight()/PIXELS_TO_METERS- 50/PIXELS_TO_METERS;
-        //bodyDef2.position.set(0,
-//                h-10/PIXELS_TO_METERS);
+
         bodyDef2.position.set(0,0);
         FixtureDef fixtureDef2 = new FixtureDef();
 
-        EdgeShape edgeShape = new EdgeShape();
-        edgeShape.set(-w/2,-h/2,w/2,-h/2);
-        fixtureDef2.shape = edgeShape;
+
+        PolygonShape rect = new PolygonShape();
+        rect.setAsBox(1000 / PIXELS_TO_METERS, 20 / PIXELS_TO_METERS);
+        fixtureDef2.shape = rect;
 
         bodyEdgeScreen = world.createBody(bodyDef2);
         bodyEdgeScreen.createFixture(fixtureDef2);
-        edgeShape.dispose();
+        rect.dispose();
 
         Gdx.input.setInputProcessor(this);
 
@@ -119,6 +116,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         //debugRenderer = new Box2DDebugRenderer();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.
                 getHeight());
+        camera.translate(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 	}
 
     private float elapsed = 0;
@@ -153,8 +151,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         batch.setProjectionMatrix(camera.combined);
 
         // Scale down the sprite batches projection matrix to box2D size
-        debugMatrix = batch.getProjectionMatrix().cpy().scale(PIXELS_TO_METERS,
-                PIXELS_TO_METERS, 0);
+       // debugMatrix = batch.getProjectionMatrix().cpy().scale(PIXELS_TO_METERS,
+        //        PIXELS_TO_METERS, 0);
 
         batch.begin();
 
@@ -164,7 +162,10 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
                     squareSprite.getWidth(),squareSprite.getHeight(),squareSprite.getScaleX(),squareSprite.
                             getScaleY(),squareSprite.getRotation());
 
-        batch.draw(orangeButton.getTexture(), 0, 0);
+        //System.out.println("square x: " + squareSprite.getX());
+        //System.out.println("square y: " + squareSprite.getY());
+
+        batch.draw(squareSprite, 0, 0);
         //batch.draw(blueButton.getSprite(), blueButton.getSprite().getOriginX(), blueButton.getSprite().getOriginY());
         //batch.draw(pinkButton.getSprite(), pinkButton.getSprite().getOriginX(), pinkButton.getSprite().getOriginY());
         //batch.draw(greenButton.getSprite(), greenButton.getSprite().getOriginX(), greenButton.getSprite().getOriginY());
@@ -245,7 +246,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     public void checkBoundsReset(){
         bodyPosition = body.getTransform();
         Vector2 test= bodyPosition.getPosition();
-        System.out.println(test.x);
+        //System.out.println(test.x);
         if(test.x>3*screenWidth/4) {
             body.setLinearVelocity(0f, 0f);
             body.setAngularVelocity(0f);
