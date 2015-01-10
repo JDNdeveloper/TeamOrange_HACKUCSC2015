@@ -2,6 +2,7 @@ package com.TeamOrange.NewSquareGame;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,22 +17,25 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Transform;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class NewSquareGame extends ApplicationAdapter implements InputProcessor {
     SpriteBatch batch;
-    Sprite sprite;
-    Texture squareSprite;
+    Sprite squareSprite;
+    Texture squareTexture;
 
     World world;
     Body body;
+    Transform bodyPosition;
     Body bodyEdgeScreen;
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugMatrix;
     OrthographicCamera camera;
-
+    float screenWidth;
+    float screenHeight;
     Vector2 jumpDir;
 
     final float GRAVITY = -6.0f;
@@ -44,26 +48,29 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
 	@Override
 	public void create () {
-        jumpDir = new Vector2(0,0);
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
+        jumpDir = new Vector2();
+        bodyPosition = new Transform();
 
         batch = new SpriteBatch();
-        squareSprite = new Texture("square.png");
-        sprite = new Sprite(squareSprite);
+        squareTexture = new Texture("square.png");
+        squareSprite = new Sprite(squareTexture);
 
-        sprite.setPosition(-sprite.getWidth()/2,-sprite.getHeight()/2);
+        squareSprite.setPosition(-squareSprite.getWidth()/2,-squareSprite.getHeight()/2);
 
         world = new World(new Vector2(0, GRAVITY),true);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set((sprite.getX() + sprite.getWidth()/2) /
+        bodyDef.position.set((squareSprite.getX() + squareSprite.getWidth()/2) /
                         PIXELS_TO_METERS,
-                (sprite.getY() + sprite.getHeight()/2) / PIXELS_TO_METERS);
+                (squareSprite.getY() + squareSprite.getHeight()/2) / PIXELS_TO_METERS);
 
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(sprite.getWidth()/2 / PIXELS_TO_METERS, sprite.getHeight()
+        shape.setAsBox(squareSprite.getWidth()/2 / PIXELS_TO_METERS, squareSprite.getHeight()
                 /2 / PIXELS_TO_METERS);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -120,12 +127,12 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         body.applyTorque(torque,true);
 
         // Set the sprite's position from the updated physics body location
-        sprite.setPosition((body.getPosition().x * PIXELS_TO_METERS) - sprite.
+        squareSprite.setPosition((body.getPosition().x * PIXELS_TO_METERS) - squareSprite.
                         getWidth()/2 ,
-                (body.getPosition().y * PIXELS_TO_METERS) -sprite.getHeight()/2 )
+                (body.getPosition().y * PIXELS_TO_METERS) -squareSprite.getHeight()/2 )
         ;
         // Ditto for rotation
-        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
+        squareSprite.setRotation((float)Math.toDegrees(body.getAngle()));
 
         Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -139,10 +146,10 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         batch.begin();
 
         if(drawSprite)
-            batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
-                    sprite.getOriginY(),
-                    sprite.getWidth(),sprite.getHeight(),sprite.getScaleX(),sprite.
-                            getScaleY(),sprite.getRotation());
+            batch.draw(squareSprite, squareSprite.getX(), squareSprite.getY(),squareSprite.getOriginX(),
+                    squareSprite.getOriginY(),
+                    squareSprite.getWidth(),squareSprite.getHeight(),squareSprite.getScaleX(),squareSprite.
+                            getScaleY(),squareSprite.getRotation());
 
         batch.end();
 
@@ -150,11 +157,18 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Note, this is strictly optional and is, as the name suggests, just
         //for debugging purposes
         //debugRenderer.render(world, debugMatrix);
+        checkBoundsReset();
 	}
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        if (keycode == Input.Keys.SPACE){
+            body.setLinearVelocity(0f, 0f);
+        body.setAngularVelocity(0f);
+        squareSprite.setPosition(0f, 0f);
+        body.setTransform(0f, 0f, 0f);
+        }
+        return true;
     }
 
     @Override
@@ -170,24 +184,20 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         jumpDir = new Vector2(10,0);
-        if(screenX<Gdx.graphics.getWidth()/4) {//left
+        if(screenX<screenWidth/4) {//left
             jumpDir.setAngle(body.getAngle());
-            jumpDir.setLength(10);
             body.applyForceToCenter(jumpDir,true);
             System.out.println("1");
-        }else if(screenX<Gdx.graphics.getWidth()/2){//left middle
+        }else if(screenX<screenWidth/2){//left middle
             jumpDir.setAngle(body.getAngle() + 90);
-            jumpDir.setLength(10);
             body.applyForceToCenter(jumpDir,true);
             System.out.println("2");
-        }else if(screenX<3*Gdx.graphics.getWidth()/4){//right middle
+        }else if(screenX<3*screenWidth/4){//right middle
             jumpDir.setAngle(body.getAngle() + 180);
-            jumpDir.setLength(10);
             body.applyForceToCenter(jumpDir,true);
             System.out.println("3");
         }else{//right
             jumpDir.setAngle(body.getAngle() + 270);
-            jumpDir.setLength(10);
             body.applyForceToCenter(jumpDir,true);
             System.out.println("4");
         }
@@ -212,5 +222,18 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    public void checkBoundsReset(){
+        bodyPosition = body.getTransform();
+        Vector2 test= bodyPosition.getPosition();
+        System.out.println(test.x);
+        if(test.x>3*screenWidth/4) {
+            body.setLinearVelocity(0f, 0f);
+            body.setAngularVelocity(0f);
+            squareSprite.setPosition(0f,0f);
+            body.setTransform(0f,0f,0f);
+            //System.out.println(bodyPosition.x);
+        }
     }
 }
