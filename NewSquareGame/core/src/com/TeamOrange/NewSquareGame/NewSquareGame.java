@@ -32,6 +32,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     Matrix4 debugMatrix;
     OrthographicCamera camera;
 
+    Vector2 jumpDir;
+
     final float GRAVITY = -6.0f;
     final float JUMPFORCE = 10.0f;
 
@@ -42,6 +44,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
 	@Override
 	public void create () {
+        jumpDir = new Vector2(0,0);
 
         batch = new SpriteBatch();
         squareSprite = new Texture("square.png");
@@ -166,7 +169,28 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        body.applyForceToCenter(0, JUMPFORCE, true);
+        jumpDir = new Vector2(10,0);
+        if(screenX<Gdx.graphics.getWidth()/4) {//left
+            jumpDir.setAngle(body.getAngle());
+            jumpDir.setLength(10);
+            body.applyForceToCenter(jumpDir,true);
+            System.out.println("1");
+        }else if(screenX<Gdx.graphics.getWidth()/2){//left middle
+            jumpDir.setAngle(body.getAngle() + 90);
+            jumpDir.setLength(10);
+            body.applyForceToCenter(jumpDir,true);
+            System.out.println("2");
+        }else if(screenX<3*Gdx.graphics.getWidth()/4){//right middle
+            jumpDir.setAngle(body.getAngle() + 180);
+            jumpDir.setLength(10);
+            body.applyForceToCenter(jumpDir,true);
+            System.out.println("3");
+        }else{//right
+            jumpDir.setAngle(body.getAngle() + 270);
+            jumpDir.setLength(10);
+            body.applyForceToCenter(jumpDir,true);
+            System.out.println("4");
+        }
         return true;
     }
 
