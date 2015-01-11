@@ -48,6 +48,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     final float buttonPaddingX = 32;
     final float buttonPaddingY = 32;
+    final float diagonalButtonOffset = 96;
 
     float torque = 0.0f;
     boolean drawSprite = true;
@@ -56,13 +57,14 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
 	@Override
 	public void create () {
-        orangeButton = new ImageButton("orangeButton.png", buttonPaddingX, buttonPaddingY);
-        greenButton = new ImageButton("greenButton.png", buttonPaddingX + orangeButton.getWidth(), buttonPaddingY);
-        blueButton = new ImageButton("blueButton.png", screenWidth - buttonPaddingX - greenButton.getWidth(), buttonPaddingY); //bad...
-        pinkButton = new ImageButton("pinkButton.png", screenWidth - buttonPaddingX * 2 - blueButton.getWidth()*2, buttonPaddingY);
-
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
+
+        orangeButton = new ImageButton("orangeButton.png", buttonPaddingX, buttonPaddingY + diagonalButtonOffset);
+        greenButton = new ImageButton("greenButton.png", buttonPaddingX*2 + orangeButton.getWidth(), buttonPaddingY);
+        blueButton = new ImageButton("blueButton.png", screenWidth - buttonPaddingX - greenButton.getWidth(), buttonPaddingY + diagonalButtonOffset); //bad...
+        pinkButton = new ImageButton("pinkButton.png", screenWidth - buttonPaddingX * 2 - blueButton.getWidth()*2, buttonPaddingY);
+
         jumpDir = new Vector2();
         bodyPosition = new Transform();
 
@@ -165,10 +167,10 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         //System.out.println("square x: " + squareSprite.getX());
         //System.out.println("square y: " + squareSprite.getY());
 
-        //batch.draw(squareSprite, 0, 0);
-        //batch.draw(blueButton.getSprite(), blueButton.getSprite().getOriginX(), blueButton.getSprite().getOriginY());
-        //batch.draw(pinkButton.getSprite(), pinkButton.getSprite().getOriginX(), pinkButton.getSprite().getOriginY());
-        //batch.draw(greenButton.getSprite(), greenButton.getSprite().getOriginX(), greenButton.getSprite().getOriginY());
+        batch.draw(orangeButton.getTexture(), orangeButton.getX(), orangeButton.getY());
+        batch.draw(blueButton.getTexture(), blueButton.getX(), blueButton.getY());
+        batch.draw(pinkButton.getTexture(), pinkButton.getX(), pinkButton.getY());
+        batch.draw(greenButton.getTexture(), greenButton.getX(), greenButton.getY());
 
         batch.end();
 
