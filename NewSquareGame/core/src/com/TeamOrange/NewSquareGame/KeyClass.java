@@ -24,6 +24,9 @@ public class KeyClass {
         if (test.y < 0 || test.x < 0 || test.x > screenWidthMeters) {
             reset(body);
         }
+        if  (test.y > screenHeightMeters){
+            body.applyForceToCenter(0f, -Constants.JUMPFORCE, true);
+        }
     }
 
     public static void reset(Body body) {
