@@ -32,6 +32,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     ImageButton pinkButton;
     ImageButton greenButton;
 
+
     World world;
     Body body;
     Transform bodyPosition;
@@ -48,6 +49,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     final float buttonPaddingX = 32;
     final float buttonPaddingY = 32;
+    final float diagonalButtonOffset = 100;
 
     float torque = 0.0f;
     boolean drawSprite = true;
@@ -56,13 +58,14 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
 	@Override
 	public void create () {
-        orangeButton = new ImageButton("orangeButton.png", buttonPaddingX, buttonPaddingY);
-        greenButton = new ImageButton("greenButton.png", buttonPaddingX + orangeButton.getWidth(), buttonPaddingY);
-        blueButton = new ImageButton("blueButton.png", screenWidth - buttonPaddingX - greenButton.getWidth(), buttonPaddingY); //bad...
-        pinkButton = new ImageButton("pinkButton.png", screenWidth - buttonPaddingX * 2 - blueButton.getWidth()*2, buttonPaddingY);
-
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
+
+        orangeButton = new ImageButton("orangeButton.png", buttonPaddingX, buttonPaddingY + diagonalButtonOffset);
+        greenButton = new ImageButton("greenButton.png", buttonPaddingX*2 + orangeButton.getWidth(), buttonPaddingY);
+        blueButton = new ImageButton("blueButton.png", screenWidth - buttonPaddingX - greenButton.getWidth(), buttonPaddingY + diagonalButtonOffset); //bad...
+        pinkButton = new ImageButton("pinkButton.png", screenWidth - buttonPaddingX * 2 - blueButton.getWidth()*2, buttonPaddingY);
+
         jumpDir = new Vector2();
         bodyPosition = new Transform();
 
@@ -165,10 +168,10 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         //System.out.println("square x: " + squareSprite.getX());
         //System.out.println("square y: " + squareSprite.getY());
 
-        //batch.draw(squareSprite, 0, 0);
-        //batch.draw(blueButton.getSprite(), blueButton.getSprite().getOriginX(), blueButton.getSprite().getOriginY());
-        //batch.draw(pinkButton.getSprite(), pinkButton.getSprite().getOriginX(), pinkButton.getSprite().getOriginY());
-        //batch.draw(greenButton.getSprite(), greenButton.getSprite().getOriginX(), greenButton.getSprite().getOriginY());
+        batch.draw(orangeButton.getSprite(), orangeButton.getX(), orangeButton.getY());
+        batch.draw(blueButton.getSprite(), blueButton.getX(), blueButton.getY());
+        batch.draw(pinkButton.getSprite(), pinkButton.getX(), pinkButton.getY());
+        batch.draw(greenButton.getSprite(), greenButton.getX(), greenButton.getY());
 
         batch.end();
 
@@ -183,9 +186,9 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.SPACE){
             body.setLinearVelocity(0f, 0f);
-        body.setAngularVelocity(0f);
-        squareSprite.setPosition(0f, 0f);
-        body.setTransform(0f, 0f, 0f);
+            body.setAngularVelocity(0f);
+            //squareSprite.setPosition(SQUAREPOSX, SQUAREPOSY);
+            body.setTransform(0f, 0f, 0f);
         }
         return true;
     }
@@ -203,19 +206,19 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         jumpDir = new Vector2(10,0);
-        if(screenX<screenWidth/4) {//left
+        if(orangeButton.mouseWithinRegion(screenX, screenY)) {//left
             jumpDir.setAngle(body.getAngle());
             body.applyForceToCenter(jumpDir,true);
             System.out.println("1");
-        }else if(screenX<screenWidth/2){//left middle
+        }else if(greenButton.mouseWithinRegion(screenX, screenY)){//left middle
             jumpDir.setAngle(body.getAngle() + 90);
             body.applyForceToCenter(jumpDir,true);
             System.out.println("2");
-        }else if(screenX<3*screenWidth/4){//right middle
+        }else if(pinkButton.mouseWithinRegion(screenX, screenY)){//right middle
             jumpDir.setAngle(body.getAngle() + 180);
             body.applyForceToCenter(jumpDir,true);
             System.out.println("3");
-        }else{//right
+        }else if (blueButton.mouseWithinRegion(screenX, screenY)){//right
             jumpDir.setAngle(body.getAngle() + 270);
             body.applyForceToCenter(jumpDir,true);
             System.out.println("4");
