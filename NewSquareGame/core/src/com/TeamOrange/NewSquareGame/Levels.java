@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Levels {
     final float BlockWidth = 200;
     final float BlockHeight = 40;
+    final float padding = 120;
 
     int currentLevel = 0;
 
@@ -24,6 +25,7 @@ public class Levels {
         BlockFactory BF;
         Star star;
         //Square square;
+
         public Level() {
             BF = new BlockFactory();
         }
@@ -40,18 +42,20 @@ public class Levels {
         //creating level one
         Level l1 = new Level();
 
-        l1.BF.makeRectangle(false,"rect.png", new Vector2(70 + BlockWidth*0, 70), world);
-        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*1, 70), world);
-        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*2, 70), world);
-        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*3, 70), world);
+        l1.BF.makeRectangle(false,"rect.png", new Vector2(70 + BlockWidth*0 + padding, 70 + padding), world);
+        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*1 + padding, 70 + padding), world);
+        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*2 + padding, 70 + padding), world);
+        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*3 + padding, 70 + padding), world);
 
-        l1.BF.makeRectangle(true, "rect.png", new Vector2(70 + BlockWidth*2, 70 + BlockHeight), world);
-        l1.BF.makeRectangle(true, "rect.png", new Vector2(70 + BlockWidth*2, 70 + BlockHeight + BlockWidth/2), world);
+        l1.BF.makeRectangle(true, "rect.png", new Vector2(70 + BlockWidth*2 + padding, 70 + BlockHeight + padding), world);
+        l1.BF.makeRectangle(true, "rect.png", new Vector2(70 + BlockWidth*2 + padding, 70 + BlockHeight + BlockWidth/2 + padding), world);
 
-        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*1 + 30, 70 + BlockHeight + 3*BlockWidth/2), world);
-        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*2 + 30, 70 + BlockHeight + 3*BlockWidth/2), world);
+        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*1 + 30 + padding, 70 + BlockHeight + 3*BlockWidth/2 + padding), world);
+        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*2 + 30 + padding, 70 + BlockHeight + 3*BlockWidth/2 + padding), world);
 
-        l1.star = new Star(70 + BlockWidth*2 + 45, 70 + BlockHeight*1 + 20, world);
+        //l1.square = new Square(world, 70 + BlockWidth*2 - 50, 70 + BlockHeight + 50);
+
+        l1.star = new Star(70 + BlockWidth*2 + 45 + padding, 70 + BlockHeight*1 + 20 + padding, world);
 
 
 
