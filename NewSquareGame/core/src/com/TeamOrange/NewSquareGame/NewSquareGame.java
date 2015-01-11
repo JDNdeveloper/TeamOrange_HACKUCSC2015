@@ -125,7 +125,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         PolygonShape rect = new PolygonShape();
         rect.setAsBox(100 / Constants.PIXELS_TO_METERS, 20 / Constants.PIXELS_TO_METERS);
         fixtureDef2.shape = rect;
-        fixtureDef2.restitution = 0.8f;
+        fixtureDef2.restitution =0 ;
 
         bodyEdgeScreen = world.createBody(bodyDef2);
         bodyEdgeScreen.createFixture(fixtureDef2);

@@ -22,9 +22,9 @@ public class KeyClass {
         Vector2 test = bodyPosition.getPosition();
         Vector2 linearVelocity = body.getLinearVelocity();
 
-//        if (test.y < 0 || test.x < 0 || test.x > screenWidthMeters) {
-//            reset(body);
-//       }
+        if (test.y < 0 || test.x < 0 || test.x > screenWidthMeters) {
+           reset(body);
+        }/*
         if  (test.y > screenHeightMeters){
             body.applyForceToCenter(0f, -Constants.REFLECTION, true);
         }
@@ -37,7 +37,7 @@ public class KeyClass {
         }
         if  (test.x < 0){
             body.applyForceToCenter(Constants.REFLECTION, 0f, true);
-        }
+        }*/
     }
 
     public static void reset(Body body) {
