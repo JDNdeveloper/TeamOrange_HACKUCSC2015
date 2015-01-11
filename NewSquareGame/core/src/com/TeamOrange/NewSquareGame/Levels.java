@@ -75,4 +75,6 @@ public class Levels {
         return levels.get(currentLevel).square;
     }
 
+    public Star getStar() {return levels.get(currentLevel).star;}
+
 }
