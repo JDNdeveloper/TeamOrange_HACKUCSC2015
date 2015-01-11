@@ -25,10 +25,13 @@ public class KeyClass {
         Vector2 test = bodyPosition.getPosition();
 
         if (test.y < 0 || test.x < 0 || test.x > screenWidthMeters) {
-            body.setLinearVelocity(0f, 0f);
-            body.setAngularVelocity(0f);
-            body.setTransform(screenCenter(), 0f);
-
+            reset(body);
         }
+    }
+
+    public static void reset(Body body) {
+        body.setLinearVelocity(0f, 0f);
+        body.setAngularVelocity(0f);
+        body.setTransform(screenCenter(), 0f);
     }
 }
