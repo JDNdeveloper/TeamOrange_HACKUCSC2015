@@ -14,19 +14,19 @@ public class KeyClass {
     static final float screenHeightMeters = Gdx.graphics.getHeight()/Constants.PIXELS_TO_METERS;
 
     public static Vector2 screenCenter() {
-        return new Vector2(screenWidthMeters/2,screenHeightMeters/2);
+        return new Vector2(screenWidthMeters/2, screenHeightMeters/2);
     }
 
-    public static void checkBoundsReset(Body body){
-        Transform bodyPosition = body.getTransform();
+    public static void checkBoundsReset(Square square){
+        Transform bodyPosition = square.getTransform();
         Vector2 test = bodyPosition.getPosition();
-        Vector2 linearVelocity = body.getLinearVelocity();
+        Vector2 linearVelocity = square.getLinearVelocity();
 
         if (test.y < 0 || test.x < 0 || test.x > screenWidthMeters) {
-           reset(body);
+           reset(square);
         }
         if  (test.y > screenHeightMeters){
-            body.applyForceToCenter(0f, -Constants.REFLECTION, true);
+            square.applyForceToCenter(0f, -Constants.REFLECTION, true);
         }
         /*
         if  (test.y < 0){
@@ -40,9 +40,9 @@ public class KeyClass {
         }*/
     }
 
-    public static void reset(Body body) {
-        body.setLinearVelocity(0f, 0f);
-        body.setAngularVelocity(Constants.ZERO_ANG_VELOCITY);
-        body.setTransform(screenCenter(), 0f);
+    public static void reset(Square square) {
+        square.setLinearVelocity(0f, 0f);
+        square.setAngularVelocity(Constants.ZERO_ANG_VELOCITY);
+        square.setTransform(screenCenter(), 0f);
     }
 }
