@@ -34,7 +34,8 @@ public class Star {
         float scale = 1f;
 
         public Particle(float x, float y, World world){
-
+            xPos = x;
+            yPos = y;
             newWorld = world;
             texture = new Texture("particle.png");
             sprite = new Sprite(texture);
@@ -71,11 +72,11 @@ public class Star {
         }
 
         public float getX(){
-            return body.getPosition().x / Constants.PIXELS_TO_METERS;
+            return xPos;
         }
 
         public float getY(){
-            return body.getPosition().y / Constants.PIXELS_TO_METERS;
+            return yPos;
         }
     }
     public Star(float x, float y, World world){
