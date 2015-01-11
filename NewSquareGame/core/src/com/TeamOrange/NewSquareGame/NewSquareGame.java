@@ -4,11 +4,16 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -21,6 +26,10 @@ import com.badlogic.gdx.physics.box2d.Transform;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
 import java.lang.Math;
 
 public class NewSquareGame extends ApplicationAdapter implements InputProcessor {
@@ -52,6 +61,13 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     float screenHeight;
     boolean paused;
 
+    BitmapFont font;
+    Color fontColor;
+    Color olColor;
+    TextureRegionDrawable olDrawable;
+    Window.WindowStyle olStyle;
+    Window overlay;
+
     boolean drawSprite = true;
 
 	@Override
@@ -59,8 +75,6 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         customPhysics = new CustomPhysics();
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
-
-
 
         Texture pauseTexture = new Texture("pause.png");
         Texture resetTexture = new Texture("reset.png");
@@ -93,6 +107,13 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         body = world.createBody(bodyDef);
         paused = false;
+
+        font = new BitmapFont(); // *** DEFAULT FONT: Arial 15pt
+        fontColor = new Color(0f, 0f, 0f, 0f);
+        olColor = new Color(0f, 0.3f, 0.3f, 0.3f);
+        olDrawable = new TextureRegionDrawable(new TextureRegion(new Texture("pauseGradient.png"), 0, 0, (int)screenWidth, (int)screenHeight));
+        olStyle = new Window.WindowStyle(font, fontColor, olDrawable);
+        overlay = new Window("paused", olStyle);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(squareSprite.getWidth()/2 / Constants.PIXELS_TO_METERS, squareSprite.getHeight()
@@ -196,9 +217,13 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         batch.draw(resetButton.getTexture(), resetButton.getX(), resetButton.getY());
         batch.draw(pauseButton.getTexture(), pauseButton.getX(), pauseButton.getY());
 
-
+        if (paused && overlay != null && batch != null) {
+            // *** SOMEONE MAKE THIS WORK
+//            overlay.draw(batch, 0.3f);
+        }
 
         batch.end();
+
 
         // Now render the physics world using our scaled down matrix
         // Note, this is strictly optional and is, as the name suggests, just

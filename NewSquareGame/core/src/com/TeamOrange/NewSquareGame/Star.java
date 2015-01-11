@@ -54,9 +54,9 @@ public class Star {
     }
 
     public void draw(SpriteBatch batch){
-         batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
-                sprite.getOriginY(),
-                sprite.getWidth(),sprite.getHeight(),sprite.getScaleX(),sp.
-                        getScaleY(),squareSprite.getRotation());
+//         batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
+//                sprite.getOriginY(),
+//                sprite.getWidth(),sprite.getHeight(),sprite.getScaleX(),sp.
+//                        getScaleY(),squareSprite.getRotation());
     }
 }
