@@ -9,17 +9,22 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import java.util.ArrayList;
+
 /**
  * Created by Brad on 1/10/2015.
  */
 public class BlockFactory {
 
     final float PIXELS_TO_METERS = 100f;
+    ArrayList<Block> blocks = new ArrayList<Block>();
 
     private class Block {
         Texture texture;
         Sprite sprite;
         Body body;
+
+
         public Block(Texture tex, World world, Vector2 bottomLeftCorner) {
             texture = tex;
             sprite = new Sprite(texture);
@@ -43,7 +48,17 @@ public class BlockFactory {
         }
 
     }
+
+    public BlockFactory(){
+
+    }
+
     public void makeRectangle(boolean vertical, String image, Vector2 bottomLeftCorner, World world) {
         Block block = new Block(new Texture("rect.png"), world, bottomLeftCorner);
+        blocks.add(block);
+    }
+
+    public void drawRects(){
+        
     }
 }
