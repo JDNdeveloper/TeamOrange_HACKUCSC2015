@@ -24,7 +24,7 @@ public class KeyClass {
         Vector2 test = bodyPosition.getPosition();
 
         if (test.y < 0 || test.x < 1 ||
-                test.x > Gdx.graphics.getWidth()/1 || test.y > Gdx.graphics.getHeight()/1) {
+                test.x > Gdx.graphics.getWidth()/PIXELS_TO_METERS || test.y > Gdx.graphics.getHeight()/PIXELS_TO_METERS) {
             body.setLinearVelocity(0f, 0f);
             body.setAngularVelocity(0f);
             body.setTransform(screenCenter(), 0f);
