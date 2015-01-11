@@ -20,9 +20,13 @@ public class Star {
     Sprite sprite;
     Body body;
     Vector2 bottomLeftCorner;
+    float scale = 1;
+    boolean scaleFlip = false;
+    float rotation = 0;
 
     public Star(float x, float y, World world){
-            sprite = new Sprite(new Texture("star.png"));
+            texture = new Texture("star.png");
+            sprite = new Sprite(texture);
             sprite.setPosition(x, y);
             BodyDef bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -43,10 +47,16 @@ public class Star {
     }
 
     public void act(){
-
+        rotation++;
+        if(scale>=1&&!scaleFlip){
+            scaleFlip = false;
+        }
     }
 
     public void draw(SpriteBatch batch){
-        
+         batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
+                sprite.getOriginY(),
+                sprite.getWidth(),sprite.getHeight(),sprite.getScaleX(),sp.
+                        getScaleY(),squareSprite.getRotation());
     }
 }
