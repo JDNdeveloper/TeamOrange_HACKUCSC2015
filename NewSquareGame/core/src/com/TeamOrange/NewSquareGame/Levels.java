@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Levels {
     final float BlockWidth = 200;
     final float BlockHeight = 40;
-    final float padding = 120;//old value was 120
+    final float padding = 400;//old value was 120
 
     int currentLevel = 0;
 
