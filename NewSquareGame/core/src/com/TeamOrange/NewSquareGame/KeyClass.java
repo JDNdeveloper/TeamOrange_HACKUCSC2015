@@ -24,11 +24,11 @@ public class KeyClass {
 
         if (test.y < 0 || test.x < 0 || test.x > screenWidthMeters) {
            reset(body);
-        }/*
+        }
         if  (test.y > screenHeightMeters){
             body.applyForceToCenter(0f, -Constants.REFLECTION, true);
         }
-        //
+        /*
         if  (test.y < 0){
             body.applyForceToCenter(0f, Constants.REFLECTION, true);
         }
