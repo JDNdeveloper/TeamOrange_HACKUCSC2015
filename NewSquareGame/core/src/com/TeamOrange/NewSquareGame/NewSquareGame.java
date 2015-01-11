@@ -38,6 +38,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     Texture squareTexture;
     Sprite rectSprite;
     Texture rectTexture;
+    Levels levels;
 
     ImageButton orangeButton;
     ImageButton blueButton;
@@ -94,13 +95,12 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         world = new World(new Vector2(0, Constants.GRAVITY),true);
 
+
+        levels = new Levels(world, batch);
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(KeyClass.screenCenter());
-
-        BF = new BlockFactory();
-
-        BF.makeRectangle(true, "rect.png", new Vector2(30, 30), world);
 
         body = world.createBody(bodyDef);
         paused = false;
@@ -117,7 +117,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         body.createFixture(fixtureDef);
         shape.dispose();
 
-        rectTexture = new Texture("rect.png");
+        /*rectTexture = new Texture("rect.png");
         rectSprite = new Sprite(rectTexture);
 
         rectSprite.setPosition(Gdx.graphics.getWidth()/2-rectSprite.getWidth()/2,20);
@@ -135,6 +135,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         bodyEdgeScreen = world.createBody(bodyDef2);
         bodyEdgeScreen.createFixture(fixtureDef2);
         rect.dispose();
+        */
 
         star = new Star(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/1.5f,world);
 
@@ -174,22 +175,23 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camera.combined);
+        //debugMatrix = batch.getProjectionMatrix().cpy().scale(Constants.PIXELS_TO_METERS, Constants.PIXELS_TO_METERS, 0);
 
-        star.act();
+        //star.act();
 
         batch.begin();
 
 //      batch.draw(new Texture(Constants.BACKGROUND),0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        levels.drawCurrentLevel();
 
         if(drawSprite)
             batch.draw(squareSprite, squareSprite.getX(), squareSprite.getY(),squareSprite.getOriginX(),
                     squareSprite.getOriginY(),
                     squareSprite.getWidth(),squareSprite.getHeight(),squareSprite.getScaleX(),squareSprite.
                             getScaleY(),squareSprite.getRotation());
-        batch.draw(rectSprite, rectSprite.getX(), rectSprite.getY());
 
-        BF.drawRects(batch);
-        star.draw(batch);
+        //star.draw(batch);
 
         batch.draw(orangeButton.getTexture(), orangeButton.getX(), orangeButton.getY());
         batch.draw(blueButton.getTexture(), blueButton.getX(), blueButton.getY());
@@ -198,6 +200,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         batch.draw(resetButton.getTexture(), resetButton.getX(), resetButton.getY());
         batch.draw(pauseButton.getTexture(), pauseButton.getX(), pauseButton.getY());
+
 
         if (paused && overlay != null && batch != null) {
             batch.draw(overlay, 0f, 0f);

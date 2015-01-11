@@ -24,7 +24,9 @@ public class Levels {
         BlockFactory BF;
         Star star;
         //Square square;
-
+        public Level() {
+            BF = new BlockFactory();
+        }
 
 
     }
@@ -33,22 +35,23 @@ public class Levels {
         world = worldNew;
         batch = batchNew;
 
+        levels = new ArrayList<Level>();
+
         //creating level one
         Level l1 = new Level();
 
-        l1.BF.makeRectangle(false,"rect", new Vector2(70 + BlockWidth*0, 70), world);
+        l1.BF.makeRectangle(false,"rect.png", new Vector2(70 + BlockWidth*0, 70), world);
         l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*1, 70), world);
         l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*2, 70), world);
         l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*3, 70), world);
-        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*4, 70), world);
 
-        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*3 + BlockWidth/2, 70 + BlockHeight*1), world);
-        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*3 + BlockWidth/2, 70 + BlockHeight*2), world);
+        l1.BF.makeRectangle(true, "rect.png", new Vector2(70 + BlockWidth*2, 70 + BlockHeight), world);
+        l1.BF.makeRectangle(true, "rect.png", new Vector2(70 + BlockWidth*2, 70 + BlockHeight + BlockWidth/2), world);
 
-        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*3, 70 + BlockHeight*3), world);
-        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*4, 70 + BlockHeight*3), world);
+        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*1 + 30, 70 + BlockHeight + 3*BlockWidth/2), world);
+        l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*2 + 30, 70 + BlockHeight + 3*BlockWidth/2), world);
 
-        l1.star = new Star(70 + BlockWidth*3 + BlockWidth/2 + 20, 70 + BlockHeight*1 + 5, world);
+        l1.star = new Star(70 + BlockWidth*2 + 45, 70 + BlockHeight*1 + 20, world);
 
 
 
@@ -58,9 +61,11 @@ public class Levels {
 
     public void drawCurrentLevel() {
         Level cLevel = levels.get(currentLevel);
+
+
+        cLevel.BF.drawRects(batch);
         cLevel.star.act();
         cLevel.star.draw(batch);
-        cLevel.BF.drawRects(batch);
     }
 
 
