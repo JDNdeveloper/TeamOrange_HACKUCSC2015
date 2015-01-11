@@ -21,6 +21,7 @@ import com.badlogic.gdx.physics.box2d.Transform;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import java.lang.Math;
 
 public class NewSquareGame extends ApplicationAdapter implements InputProcessor {
     SpriteBatch batch;
@@ -205,17 +206,17 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(orangeButton.mouseWithinRegion(screenX,screenY)) {//left
-            customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle()+180);
-            System.out.println(body.getAngle()+180);
+            customPhysics.applyForceInDirection(body,JUMPFORCE, (float) (body.getAngle()+Math.PI));
+            //System.out.println(body.getAngle() + Math.toRadians(180));
         }else if(greenButton.mouseWithinRegion(screenX,screenY)){//left middle
-            customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle()+90);
-            System.out.println(body.getAngle()+90);
+            customPhysics.applyForceInDirection(body, JUMPFORCE, (float) (body.getAngle() + Math.PI/2));
+           // System.out.println(body.getAngle()+Math.toRadians(90));
         }else if(pinkButton.mouseWithinRegion(screenX,screenY)){//right middle
-            customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle()+270);
-            System.out.println(body.getAngle()+270);
+            customPhysics.applyForceInDirection(body, JUMPFORCE, (float) (body.getAngle() + 3*Math.PI/2));
+           // System.out.println(body.getAngle()+Math.toRadians(270));
         }else if(blueButton.mouseWithinRegion(screenX,screenY)){//right
-            customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle());
-            System.out.println(body.getAngle());
+            customPhysics.applyForceInDirection(body, JUMPFORCE, body.getAngle());
+           // System.out.println(body.getAngle());
         }
         return true;
     }
