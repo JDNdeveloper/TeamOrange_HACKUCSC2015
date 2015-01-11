@@ -124,7 +124,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         // Create a Box2DDebugRenderer, this allows us to see the physics
         //simulation controlling the scene
-        debugRenderer = new Box2DDebugRenderer();
+        //debugRenderer = new Box2DDebugRenderer();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.
                 getHeight());
         camera.translate(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
@@ -162,7 +162,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         batch.setProjectionMatrix(camera.combined);
 
         // Scale down the sprite batches projection matrix to box2D size
-       debugMatrix = batch.getProjectionMatrix().cpy().scale(PIXELS_TO_METERS,PIXELS_TO_METERS, 0);
+      // debugMatrix = batch.getProjectionMatrix().cpy().scale(PIXELS_TO_METERS,PIXELS_TO_METERS, 0);
 
         batch.begin();
 
@@ -185,7 +185,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Now render the physics world using our scaled down matrix
         // Note, this is strictly optional and is, as the name suggests, just
         //for debugging purposes
-        debugRenderer.render(world, debugMatrix);
+        //debugRenderer.render(world, debugMatrix);
         KeyClass.checkBoundsReset(body);
         Transform bodyPosition = body.getTransform();
         //System.out.println(bodyPosition.getPosition().x);
@@ -198,6 +198,10 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
             body.setAngularVelocity(0f);
             squareSprite.setPosition(0f, 0f);
             body.setTransform(KeyClass.screenCenter(), 0f);
+        }
+
+        if (keycode == Input.Keys.UP){
+            body.setAngularVelocity(1f);
         }
         return true;
     }
