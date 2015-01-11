@@ -10,8 +10,8 @@ public class ImageButton {
     Texture image;
     Sprite imageSprite;
 
-    int mouseX;
-    int mouseY;
+    float mouseX;
+    float mouseY;
 
     float imageX;
     float imageY;
@@ -23,10 +23,11 @@ public class ImageButton {
 
         image = new Texture(imageName);
         imageSprite = new Sprite(image);
+        imageSprite.setPosition(-imageSprite.getWidth()/2,-imageSprite.getHeight()/2);
 
     }
 
-    public boolean mouseWithinRegion(int X, int Y) {
+    public boolean mouseWithinRegion(float X, float Y) {
         mouseX = X;
         mouseY = Y;
 
@@ -48,8 +49,8 @@ public class ImageButton {
         return image.getHeight();
     }
 
-    public Sprite getSprite() {
-        return imageSprite;
+    public Texture getTexture() {
+        return image;
     }
 
     public float getX() {
