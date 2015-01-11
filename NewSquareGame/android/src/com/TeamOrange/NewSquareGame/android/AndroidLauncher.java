@@ -13,4 +13,8 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new NewSquareGame(), config);
 	}
+
+    @Override
+    public void onBackPressed() {
+    }
 }

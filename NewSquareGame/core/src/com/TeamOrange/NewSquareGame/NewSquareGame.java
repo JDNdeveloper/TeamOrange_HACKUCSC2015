@@ -206,7 +206,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(orangeButton.mouseWithinRegion(screenX,screenY)) {//left
-            customPhysics.applyForceInDirection(body,JUMPFORCE, (float) (body.getAngle()+Math.PI));
+            customPhysics.applyForceInDirection(body, JUMPFORCE, (float) (body.getAngle()+Math.PI));
             //System.out.println(body.getAngle() + Math.toRadians(180));
         }else if(greenButton.mouseWithinRegion(screenX,screenY)){//left middle
             customPhysics.applyForceInDirection(body, JUMPFORCE, (float) (body.getAngle() + Math.PI/2));
