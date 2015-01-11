@@ -23,7 +23,7 @@ public class KeyClass {
         Transform bodyPosition = body.getTransform();
         Vector2 test = bodyPosition.getPosition();
 
-        if (test.y < 0 || test.x < 1 ||
+        if (test.y < 0 || test.x < 0 ||
                 test.x > Gdx.graphics.getWidth()/PIXELS_TO_METERS || test.y > Gdx.graphics.getHeight()/PIXELS_TO_METERS) {
             body.setLinearVelocity(0f, 0f);
             body.setAngularVelocity(0f);
