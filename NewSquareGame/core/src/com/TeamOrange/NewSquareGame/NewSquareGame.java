@@ -85,7 +85,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 0.1f;
+        fixtureDef.density = 0.05f;
+        fixtureDef.restitution = 0f;
 
         body.createFixture(fixtureDef);
         shape.dispose();
@@ -109,6 +110,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         PolygonShape rect = new PolygonShape();
         rect.setAsBox(100 / Constants.PIXELS_TO_METERS, 20 / Constants.PIXELS_TO_METERS);
         fixtureDef2.shape = rect;
+        fixtureDef2.restitution = 0.8f;
 
         bodyEdgeScreen = world.createBody(bodyDef2);
         bodyEdgeScreen.createFixture(fixtureDef2);
