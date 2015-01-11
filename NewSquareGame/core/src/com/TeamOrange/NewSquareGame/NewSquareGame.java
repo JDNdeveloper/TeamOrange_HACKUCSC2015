@@ -86,7 +86,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         pauseButton = new ImageButton("pause.png", pauseTexture.getWidth() - 10, screenHeight - 1.5f*pauseTexture.getHeight());
 
         overlay = new Sprite(new Texture("pauseGradient.png"), (int)screenWidth, (int)screenHeight);
-        menu = new Sprite(new Texture("menu1080.png"), (int)screenWidth, (int)screenHeight);
+        menu = new Sprite(new Texture("menu.png"), (int)screenWidth, (int)screenHeight);
 
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         batch = new SpriteBatch();
