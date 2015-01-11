@@ -34,6 +34,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     ImageButton blueButton;
     ImageButton pinkButton;
     ImageButton greenButton;
+    ImageButton pauseButton;
     CustomPhysics customPhysics;
 
     World world;
@@ -45,6 +46,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     OrthographicCamera camera;
     float screenWidth;
     float screenHeight;
+    boolean paused;
 
     final float GRAVITY = -6.0f;
     final float JUMPFORCE = 10.0f;
@@ -63,12 +65,13 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         customPhysics = new CustomPhysics();
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
+        Texture pauseTexture = new Texture("pause.png");
 
         orangeButton = new ImageButton("orangeButton.png", buttonPaddingX, buttonPaddingY + diagonalButtonOffset);
         greenButton = new ImageButton("greenButton.png", buttonPaddingX*2 + orangeButton.getWidth(), buttonPaddingY);
         blueButton = new ImageButton("blueButton.png", screenWidth - buttonPaddingX - greenButton.getWidth(), buttonPaddingY + diagonalButtonOffset); //bad...
         pinkButton = new ImageButton("pinkButton.png", screenWidth - buttonPaddingX * 2 - blueButton.getWidth()*2, buttonPaddingY);
-
+        pauseButton = new ImageButton("pause.png", pauseTexture.getWidth(), screenHeight - 1.5f*pauseTexture.getHeight());
         bodyPosition = new Transform();
 
         batch = new SpriteBatch();
@@ -81,10 +84,10 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        //bodyDef.position.set((Gdx.graphics.getWidth()/2)/PIXELS_TO_METERS,(Gdx.graphics.getHeight()/2)/PIXELS_TO_METERS);
-        bodyDef.position.set(KeyClass.screenWidthMeters/2,KeyClass.screenHeightMeters/2);
+        bodyDef.position.set(KeyClass.screenCenter());
 
         body = world.createBody(bodyDef);
+        paused = false;
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(squareSprite.getWidth()/2 / PIXELS_TO_METERS, squareSprite.getHeight()
@@ -108,7 +111,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         //float w = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
         //float h = Gdx.graphics.getHeight()/PIXELS_TO_METERS- 50/PIXELS_TO_METERS;
 
-        bodyDef2.position.set(Gdx.graphics.getWidth()/2/PIXELS_TO_METERS,40/PIXELS_TO_METERS);
+        bodyDef2.position.set(Gdx.graphics.getWidth() / 2 / PIXELS_TO_METERS, 40 / PIXELS_TO_METERS);
         FixtureDef fixtureDef2 = new FixtureDef();
 
         //rectSprite.setPosition(bodyDef2.position.x,bodyDef2.position.y);
@@ -139,11 +142,11 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         //batch.begin();
         //batch.draw(img, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         //batch.end();
-
-        camera.update();
-        // Step the physics simulation forward at a rate of 60hz
-        world.step(1f/60f, 6, 2);
-
+        if (!paused) {
+            camera.update();
+            // Step the physics simulation forward at a rate of 60hz
+            world.step(1f / 60f, 6, 2);
+        }
         // Apply torque to the physics body.  At start this is 0 and will do
        // nothing.  Controlled with [] keys
         // Torque is applied per frame instead of just once
@@ -180,6 +183,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         batch.draw(blueButton.getTexture(), blueButton.getX(), blueButton.getY());
         batch.draw(pinkButton.getTexture(), pinkButton.getX(), pinkButton.getY());
         batch.draw(greenButton.getTexture(), greenButton.getX(), greenButton.getY());
+        batch.draw(pauseButton.getTexture(), pauseButton.getX(), pauseButton.getY());
 
         batch.end();
 
@@ -219,18 +223,21 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if(orangeButton.mouseWithinRegion(screenX,screenY)) {//left
-            customPhysics.applyForceInDirection(body, JUMPFORCE, (float) (body.getAngle()+Math.PI));
+        if (orangeButton.mouseWithinRegion(screenX, screenY)) {//left
+            customPhysics.applyForceInDirection(body, JUMPFORCE, (float) (body.getAngle() + Math.PI));
             //System.out.println(body.getAngle() + Math.toRadians(180));
-        }else if(greenButton.mouseWithinRegion(screenX,screenY)){//left middle
+        } else if (greenButton.mouseWithinRegion(screenX, screenY)){//left middle
             customPhysics.applyForceInDirection(body, JUMPFORCE, (float) (body.getAngle() + Math.PI/2));
            // System.out.println(body.getAngle()+Math.toRadians(90));
-        }else if(pinkButton.mouseWithinRegion(screenX,screenY)){//right middle
-            customPhysics.applyForceInDirection(body, JUMPFORCE, (float) (body.getAngle() + 3*Math.PI/2));
+        } else if (pinkButton.mouseWithinRegion(screenX, screenY)){//right middle
+            customPhysics.applyForceInDirection(body, JUMPFORCE, (float) (body.getAngle() + 3 * Math.PI / 2));
            // System.out.println(body.getAngle()+Math.toRadians(270));
-        }else if(blueButton.mouseWithinRegion(screenX,screenY)){//right
+        } else if (blueButton.mouseWithinRegion(screenX, screenY)){//right
             customPhysics.applyForceInDirection(body, JUMPFORCE, body.getAngle());
            // System.out.println(body.getAngle());
+        } else if (pauseButton.mouseWithinRegion(screenX, screenY)) {
+            paused = !paused;
+            System.out.println("paused: " + paused);
         }
         return true;
     }
