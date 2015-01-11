@@ -23,8 +23,8 @@ public class KeyClass {
         Transform bodyPosition = body.getTransform();
         Vector2 test = bodyPosition.getPosition();
 
-        if (test.y < 1 || test.x < 1 ||
-                test.x > Gdx.graphics.getWidth()/8 || test.y > Gdx.graphics.getHeight()/4) {
+        if (test.y < 0 || test.x < 1 ||
+                test.x > Gdx.graphics.getWidth()/1 || test.y > Gdx.graphics.getHeight()/1) {
             body.setLinearVelocity(0f, 0f);
             body.setAngularVelocity(0f);
             body.setTransform(screenCenter(), 0f);
