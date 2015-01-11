@@ -178,7 +178,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Note, this is strictly optional and is, as the name suggests, just
         //for debugging purposes
         //debugRenderer.render(world, debugMatrix);
-        KeyClass.checkBoundsReset(body, Gdx.graphics);
+        KeyClass.checkBoundsReset(body);
 	}
 
     @Override
@@ -206,12 +206,16 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(orangeButton.mouseWithinRegion(screenX,screenY)) {//left
             customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle()+180);
+            System.out.println(body.getAngle()+180);
         }else if(greenButton.mouseWithinRegion(screenX,screenY)){//left middle
             customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle()+90);
+            System.out.println(body.getAngle()+90);
         }else if(pinkButton.mouseWithinRegion(screenX,screenY)){//right middle
             customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle()+270);
+            System.out.println(body.getAngle()+270);
         }else if(blueButton.mouseWithinRegion(screenX,screenY)){//right
             customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle());
+            System.out.println(body.getAngle());
         }
         return true;
     }
