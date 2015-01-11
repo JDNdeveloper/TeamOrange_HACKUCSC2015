@@ -19,11 +19,11 @@ public class KeyClass {
                 (Gdx.graphics.getHeight()/2)/PIXELS_TO_METERS);
     }
 
-    public static void checkBoundsReset(Body body,Graphics graphics){
+    public static void checkBoundsReset(Body body){
         Transform bodyPosition = body.getTransform();
         Vector2 test = bodyPosition.getPosition();
 
-        if (test.y < 0 || test.x < 0 || test.x/PIXELS_TO_METERS > graphics.getWidth()) {
+        if (test.y < 0 || test.x < 0 || test.x/PIXELS_TO_METERS > Gdx.graphics.getWidth()) {
             body.setLinearVelocity(0f, 0f);
             body.setAngularVelocity(0f);
             body.setTransform(KeyClass.screenCenter(), 0f);
