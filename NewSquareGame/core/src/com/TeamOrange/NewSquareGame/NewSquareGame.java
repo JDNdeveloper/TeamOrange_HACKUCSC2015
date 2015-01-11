@@ -65,8 +65,6 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         screenHeight = Gdx.graphics.getHeight();
         jumpDir = new Vector2();
         bodyPosition = new Transform();
-        final Vector2 SCREEN_CENTER = new Vector2((screenWidth/2)/PIXELS_TO_METERS,
-                                                  (screenHeight/2)/PIXELS_TO_METERS);
 
         batch = new SpriteBatch();
         squareTexture = new Texture("square.png");
@@ -187,7 +185,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
             body.setLinearVelocity(0f, 0f);
             body.setAngularVelocity(0f);
             squareSprite.setPosition(0f, 0f);
-            body.setTransform(screenCenter(), 0f);
+            body.setTransform(KeyClass.screenCenter(), 0f);
         }
         return true;
     }
@@ -245,11 +243,6 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         return false;
     }
 
-    public Vector2 screenCenter() {
-        return new Vector2((Gdx.graphics.getWidth()/2)/PIXELS_TO_METERS,
-                           (Gdx.graphics.getHeight()/2)/PIXELS_TO_METERS);
-    }
-
     // called every frame
     // when body goes off-screen, reset body to the default position
     public void checkBoundsReset() {
@@ -259,7 +252,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         if (test.y < 0 || test.x < 0 || test.x/PIXELS_TO_METERS > screenWidth) {
             body.setLinearVelocity(0f, 0f);
             body.setAngularVelocity(0f);
-            body.setTransform(screenCenter(), 0f);
+            body.setTransform(KeyClass.screenCenter(), 0f);
         }
     }
 }
