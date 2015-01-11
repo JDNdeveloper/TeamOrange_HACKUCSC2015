@@ -21,11 +21,21 @@ public class KeyClass {
         Transform bodyPosition = body.getTransform();
         Vector2 test = bodyPosition.getPosition();
 
-        if (test.y < 0 || test.x < 0 || test.x > screenWidthMeters) {
-            reset(body);
-        }
+//        if (test.y < 0 || test.x < 0 || test.x > screenWidthMeters) {
+//            reset(body);
+//       }
         if  (test.y > screenHeightMeters){
-            body.applyForceToCenter(0f, -Constants.JUMPFORCE, true);
+            body.applyForceToCenter(0f, -Constants.REFLECTION, true);
+        }
+        //
+        if  (test.y < 0){
+            body.applyForceToCenter(0f, Constants.REFLECTION, true);
+        }
+        if  (test.x > screenWidthMeters){
+            body.applyForceToCenter(-Constants.REFLECTION, 0f, true);
+        }
+        if  (test.x < 0){
+            body.applyForceToCenter(Constants.REFLECTION, 0f, true);
         }
     }
 
