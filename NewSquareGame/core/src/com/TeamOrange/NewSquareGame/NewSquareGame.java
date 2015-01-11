@@ -142,7 +142,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Apply torque to the physics body.  At start this is 0 and will do
        // nothing.  Controlled with [] keys
         // Torque is applied per frame instead of just once
-        square.applyTorque(Constants.torque, true);
+       // square.applyTorque(Constants.torque, true);
 
         // Set the square's position from the updated physics body location
         square.setPosition((square.getPosition().x * Constants.PIXELS_TO_METERS) - square.getWidth()/2,
