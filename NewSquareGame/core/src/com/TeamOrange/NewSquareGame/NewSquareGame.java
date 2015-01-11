@@ -35,6 +35,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     ImageButton pinkButton;
     ImageButton greenButton;
 
+    BlockFactory BF;
+
     ImageButton pauseButton;
     ImageButton resetButton;
     CustomPhysics customPhysics;
@@ -57,6 +59,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         customPhysics = new CustomPhysics();
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
+
+
 
         Texture pauseTexture = new Texture("pause.png");
         Texture resetTexture = new Texture("reset.png");
@@ -82,6 +86,10 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(KeyClass.screenCenter());
+
+        BF = new BlockFactory();
+
+        BF.makeRectangle(true, "rect.png", new Vector2(30, 30), world);
 
         body = world.createBody(bodyDef);
         paused = false;
@@ -165,7 +173,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         batch.setProjectionMatrix(camera.combined);
 
         // Scale down the sprite batches projection matrix to box2D size
-      // debugMatrix = batch.getProjectionMatrix().cpy().scale(PIXELS_TO_METERS,PIXELS_TO_METERS, 0);
+       //debugMatrix = batch.getProjectionMatrix().cpy().scale(Constants.PIXELS_TO_METERS,Constants.PIXELS_TO_METERS, 0);
 
         batch.begin();
 
@@ -178,6 +186,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         //System.out.println("square x: " + squareSprite.getX());
         //System.out.println("square y: " + squareSprite.getY());
 
+        BF.drawRects(batch);
+
         batch.draw(orangeButton.getTexture(), orangeButton.getX(), orangeButton.getY());
         batch.draw(blueButton.getTexture(), blueButton.getX(), blueButton.getY());
         batch.draw(pinkButton.getTexture(), pinkButton.getX(), pinkButton.getY());
@@ -185,6 +195,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         batch.draw(resetButton.getTexture(), resetButton.getX(), resetButton.getY());
         batch.draw(pauseButton.getTexture(), pauseButton.getX(), pauseButton.getY());
+
+
 
         batch.end();
 
