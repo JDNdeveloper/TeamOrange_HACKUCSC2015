@@ -44,6 +44,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     ImageButton blueButton;
     ImageButton pinkButton;
     ImageButton greenButton;
+    Sprite menu;
+    boolean menuTouched = false;
 
     BlockFactory BF;
 
@@ -84,6 +86,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         pauseButton = new ImageButton("pause.png", pauseTexture.getWidth() - 10, screenHeight - 1.5f*pauseTexture.getHeight());
 
         overlay = new Sprite(new Texture("pauseGradient.png"), (int)screenWidth, (int)screenHeight);
+        menu = new Sprite(new Texture("menu.png"), (int)screenWidth, (int)screenHeight);
 
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         batch = new SpriteBatch();
@@ -178,6 +181,10 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         if (paused && overlay != null && batch != null) {
             batch.draw(overlay, 0f, 0f);
         }
+        if (!menuTouched && menu != null && batch != null) {
+            batch.draw(menu, 0f,0f);
+        }
+
 
         batch.end();
 
@@ -212,6 +219,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        menuTouched = true;
         if (pauseButton.mouseWithinRegion(screenX, screenY)) {
             paused = !paused;
         }
