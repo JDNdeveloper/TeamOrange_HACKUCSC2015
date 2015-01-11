@@ -17,8 +17,7 @@ public class KeyClass {
     static final float screenHeightMeters = Gdx.graphics.getHeight()/PIXELS_TO_METERS;
 
     public static Vector2 screenCenter() {
-        return new Vector2((Gdx.graphics.getWidth()/2)/PIXELS_TO_METERS,
-                (Gdx.graphics.getHeight()/2)/PIXELS_TO_METERS);
+        return new Vector2(screenWidthMeters/2,screenHeightMeters/2);
     }
 
     public static void checkBoundsReset(Body body){
