@@ -12,8 +12,8 @@ public class Constants {
     static final float DEFAULT_ANG_VELOCITY = 5f;
 
     static final float TIME_STEP = 1f/60f;
-    static final int   VELOCITY_INTERATIONS = 6;
-    static final int   POSITION_ITERATIONS = 2;
+    static final int   VELOCITY_INTERATIONS = 10;
+    static final int   POSITION_ITERATIONS = 1;
     
     static final float buttonPaddingX = 32;
     static final float buttonPaddingY = 32;
