@@ -42,7 +42,6 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     OrthographicCamera camera;
     float screenWidth;
     float screenHeight;
-    Vector2 jumpDir;
 
     final float GRAVITY = -6.0f;
     final float JUMPFORCE = 10.0f;
@@ -67,7 +66,6 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         blueButton = new ImageButton("blueButton.png", screenWidth - buttonPaddingX - greenButton.getWidth(), buttonPaddingY + diagonalButtonOffset); //bad...
         pinkButton = new ImageButton("pinkButton.png", screenWidth - buttonPaddingX * 2 - blueButton.getWidth()*2, buttonPaddingY);
 
-        jumpDir = new Vector2();
         bodyPosition = new Transform();
 
         batch = new SpriteBatch();
@@ -206,7 +204,6 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        jumpDir = new Vector2(10,0);
         if(orangeButton.mouseWithinRegion(screenX,screenY)) {//left
             customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle()+180);
         }else if(greenButton.mouseWithinRegion(screenX,screenY)){//left middle
