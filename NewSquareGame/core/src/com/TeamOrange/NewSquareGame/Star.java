@@ -22,16 +22,17 @@ public class Star {
     float scale = 1f;
     boolean scaleFlip = false;
     float rotation = 0f;
-    Particle particles[] = new Particle[50];
+  //  Particle particles[] = new Particle[10];
     float xPos;
     float yPos;
     World newWorld;
-
+/*
     private class Particle {
         Texture texture;
         Sprite sprite;
         Body body;
         float scale = 1f;
+        float move = 1 - (2 *(float) Math.random());
 
         public Particle(float x, float y, World world){
             xPos = x;
@@ -40,23 +41,6 @@ public class Star {
             texture = new Texture("particle.png");
             sprite = new Sprite(texture);
             sprite.setPosition(x, y);
-           /* BodyDef bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.DynamicBody;
-            bodyDef.position.set((x + sprite.getWidth() /2) / Constants.PIXELS_TO_METERS, (y + sprite.getHeight() / 2) / Constants.PIXELS_TO_METERS);
-
-            body = world.createBody(bodyDef);
-
-            CircleShape shape = new CircleShape();
-            shape.setRadius(sprite.getWidth() / 2 / Constants.PIXELS_TO_METERS);
-
-            FixtureDef fixtureDef = new FixtureDef();
-            fixtureDef.shape = shape;
-            fixtureDef.density = 0.1f;
-
-            body.createFixture(fixtureDef);
-            shape.dispose();
-
-            body.applyForceToCenter((float) Math.random()*20,(float) Math.random()*20,true);*/
         }
 
         public float getScale(){
@@ -78,10 +62,15 @@ public class Star {
         public float getY(){
             return yPos;
         }
-    }
+        public void setPos(float newX, float newY){
+            sprite.setPosition(newX, newY);
+        }
+
+        public float getMove(){
+            return move;
+        }
+    }*/
     public Star(float x, float y, World world){
-            xPos = x;
-            yPos = y;
 
             texture = new Texture("star.png");
             sprite = new Sprite(texture);
@@ -100,11 +89,11 @@ public class Star {
             fixtureDef.density = 0.1f;
 
             body.createFixture(fixtureDef);
-            shape.dispose();*/
+            shape.dispose();
 
             for(int i =0;i<particles.length;i++) {
                 particles[i] = new Particle((float) (x + Math.random() * sprite.getWidth()), y, world);
-            }
+            }*/
     }
 
     public void act(){
@@ -117,22 +106,23 @@ public class Star {
             scale += 0.01f;
         }if(scale>=1f){
             scaleFlip = false;
-        }
+        }/*
         for(int i=0;i<particles.length;i++){
             particles[i].setScale((float) (particles[i].getScale()-Math.random()/40));
+            particles[i].setPos(particles[i].getX()+particles[i].getMove(),particles[i].getY()-0.5f);
             if(particles[i].getScale() < 0.1f){
                 particles[i] = new Particle((float) (xPos + Math.random() * sprite.getWidth()), yPos, newWorld);
             }
-        }
+        }*/
     }
 
     public void draw(SpriteBatch batch){
          batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
                 sprite.getOriginY(),
-                sprite.getWidth(),sprite.getHeight(),scale,scale,rotation);
+                sprite.getWidth(),sprite.getHeight(),scale,scale,rotation);/*
         for(int i =0;i<particles.length;i++) {
             batch.draw(particles[i].getSprite(),particles[i].getX(),particles[i].getY(),particles[i].getSprite().getOriginX(),particles[i].getSprite().getOriginX(),particles[i].getSprite().getWidth(),particles[i].getSprite().getHeight(),particles[i].getScale(),particles[i].getScale(),0);
-        }
+        }*/
     }
 
 
