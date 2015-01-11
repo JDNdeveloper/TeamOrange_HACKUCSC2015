@@ -82,7 +82,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         //bodyDef.position.set((Gdx.graphics.getWidth()/2)/PIXELS_TO_METERS,(Gdx.graphics.getHeight()/2)/PIXELS_TO_METERS);
-        bodyDef.position.set(KeyClass.screenWidthMeters/2,KeyClass.screenHeightMeters);
+        bodyDef.position.set(KeyClass.screenWidthMeters/2,KeyClass.screenHeightMeters/2);
 
         body = world.createBody(bodyDef);
 
