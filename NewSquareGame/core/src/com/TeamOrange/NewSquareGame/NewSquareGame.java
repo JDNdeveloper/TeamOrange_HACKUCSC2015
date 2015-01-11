@@ -153,6 +153,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         bodyEdgeScreen.createFixture(fixtureDef2);
         rect.dispose();
 
+        star = new Star(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/1.5f,world);
+
         Gdx.input.setInputProcessor(this);
 
         // Create a Box2DDebugRenderer, this allows us to see the physics
@@ -197,6 +199,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Scale down the sprite batches projection matrix to box2D size
        //debugMatrix = batch.getProjectionMatrix().cpy().scale(Constants.PIXELS_TO_METERS,Constants.PIXELS_TO_METERS, 0);
 
+        star.act();
+
         batch.begin();
 
         if(drawSprite)
@@ -209,6 +213,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         //System.out.println("square y: " + squareSprite.getY());
 
         BF.drawRects(batch);
+        star.draw(batch);
 
         batch.draw(orangeButton.getTexture(), orangeButton.getX(), orangeButton.getY());
         batch.draw(blueButton.getTexture(), blueButton.getX(), blueButton.getY());
@@ -264,7 +269,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (pauseButton.mouseWithinRegion(screenX, screenY)) {
             paused = !paused;
-            System.out.println("paused: " + paused);
+            //stem.out.println("paused: " + paused);
         }
         if (resetButton.mouseWithinRegion(screenX, screenY)) {
             KeyClass.reset(body);

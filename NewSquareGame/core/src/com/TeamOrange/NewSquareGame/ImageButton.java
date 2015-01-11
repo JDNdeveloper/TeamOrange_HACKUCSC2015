@@ -35,7 +35,7 @@ public class ImageButton {
         float topRightX = image.getWidth() + imageX;
         float topRightY = image.getHeight() + imageY;
 
-        System.out.println("X "+ X + "Y " + mouseY);
+        //System.out.println("X "+ X + "Y " + mouseY);
         if (!(mouseX < topRightX && mouseX > imageX)) return false; //if x not in bounds
         if (!(mouseY < topRightY && mouseY > imageY)) return false; //if y not in bounds
 
