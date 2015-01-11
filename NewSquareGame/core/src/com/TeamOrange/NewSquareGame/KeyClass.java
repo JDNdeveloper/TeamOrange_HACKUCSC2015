@@ -7,6 +7,8 @@ package com.TeamOrange.NewSquareGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.Graphics;
 
 public class KeyClass {
 
@@ -15,5 +17,16 @@ public class KeyClass {
     public static Vector2 screenCenter() {
         return new Vector2((Gdx.graphics.getWidth()/2)/PIXELS_TO_METERS,
                 (Gdx.graphics.getHeight()/2)/PIXELS_TO_METERS);
+    }
+
+    public static void checkBoundsReset(Body body,Graphics graphics){
+        Transform bodyPosition = body.getTransform();
+        Vector2 test = bodyPosition.getPosition();
+
+        if (test.y < 0 || test.x < 0 || test.x/PIXELS_TO_METERS > graphics.getWidth()) {
+            body.setLinearVelocity(0f, 0f);
+            body.setAngularVelocity(0f);
+            body.setTransform(KeyClass.screenCenter(), 0f);
+        }
     }
 }
