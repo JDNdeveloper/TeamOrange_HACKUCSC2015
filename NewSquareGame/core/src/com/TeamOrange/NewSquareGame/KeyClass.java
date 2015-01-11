@@ -6,7 +6,6 @@ package com.TeamOrange.NewSquareGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
 
 public class KeyClass {
 
@@ -18,8 +17,9 @@ public class KeyClass {
     }
 
     public static void checkBoundsReset(Square square, Star star){
-    //    Transform bodyPosition = square.getTransform();
         Vector2 squarePosition = square.getTransform().getPosition();
+        Vector2 starPosition = new Vector2(star.sprite.getX()/Constants.PIXELS_TO_METERS,
+                star.sprite.getY()/Constants.PIXELS_TO_METERS);
 //        Vector2 linearVelocity = square.getLinearVelocity();
 
         if (squarePosition.y < 0 || squarePosition.x < 0 || squarePosition.x > screenWidthMeters) {
@@ -38,7 +38,8 @@ public class KeyClass {
         if  (test.x < 0){
             body.applyForceToCenter(Constants.REFLECTION, 0f, true);
         }*/
-     //   if (distance())
+        if (distance(starPosition, squarePosition) < 1)
+            reset(square);
     }
 
     public static float distance(Vector2 object1, Vector2 object2){
