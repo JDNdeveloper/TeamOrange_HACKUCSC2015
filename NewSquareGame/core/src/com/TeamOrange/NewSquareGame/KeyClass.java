@@ -13,6 +13,8 @@ import com.badlogic.gdx.Graphics;
 public class KeyClass {
 
     static final float PIXELS_TO_METERS = 100f;
+    static final float screenWidthMeters = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
+    static final float screenHeightMeters = Gdx.graphics.getHeight()/PIXELS_TO_METERS;
 
     public static Vector2 screenCenter() {
         return new Vector2((Gdx.graphics.getWidth()/2)/PIXELS_TO_METERS,
