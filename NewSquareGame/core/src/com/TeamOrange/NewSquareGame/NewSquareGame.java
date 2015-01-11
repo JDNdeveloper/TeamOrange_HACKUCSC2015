@@ -178,7 +178,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Note, this is strictly optional and is, as the name suggests, just
         //for debugging purposes
         //debugRenderer.render(world, debugMatrix);
-        checkBoundsReset();
+        KeyClass.checkBoundsReset(body, Gdx.graphics);
 	}
 
     @Override
@@ -236,7 +236,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         return false;
     }
 
-    public void checkBoundsReset(){
+    /*public void checkBoundsReset(){
         bodyPosition = body.getTransform();
         Vector2 test = bodyPosition.getPosition();
 
@@ -245,5 +245,5 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
             body.setAngularVelocity(0f);
             body.setTransform(KeyClass.screenCenter(), 0f);
         }
-    }
+    }*/
 }
