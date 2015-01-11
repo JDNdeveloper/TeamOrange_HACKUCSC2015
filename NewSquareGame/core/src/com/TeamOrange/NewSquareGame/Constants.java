@@ -23,5 +23,5 @@ public class Constants {
 
     static final float PIXELS_TO_METERS = 100f;
 
-    static final String BACKGROUND = "rect.png";
+    static final String BACKGROUND = "bg.png";
 }
