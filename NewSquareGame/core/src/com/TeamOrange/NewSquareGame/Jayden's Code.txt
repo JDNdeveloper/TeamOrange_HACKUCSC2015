@@ -1,0 +1,11 @@
+ orangeButton = new ImageButton("orangeButton.png", buttonPaddingX, buttonPaddingY + diagonalButtonOffset);
+        greenButton = new ImageButton("greenButton.png", buttonPaddingX*2 + orangeButton.getWidth(), buttonPaddingY);
+        blueButton = new ImageButton("blueButton.png", screenWidth - buttonPaddingX - greenButton.getWidth(), buttonPaddingY + diagonalButtonOffset); //bad...
+        pinkButton = new ImageButton("pinkButton.png", screenWidth - buttonPaddingX * 2 - blueButton.getWidth()*2, buttonPaddingY);
+
+
+
+batch.draw(orangeButton.getSprite(), orangeButton.getX(), orangeButton.getY());
+        batch.draw(blueButton.getSprite(), blueButton.getX(), blueButton.getY());
+        batch.draw(pinkButton.getSprite(), pinkButton.getX(), pinkButton.getY());
+        batch.draw(greenButton.getSprite(), greenButton.getX(), greenButton.getY());
