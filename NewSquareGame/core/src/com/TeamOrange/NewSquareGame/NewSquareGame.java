@@ -27,6 +27,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     SpriteBatch batch;
     Sprite squareSprite;
     Texture squareTexture;
+    Sprite rectSprite;
+    Texture rectTexture;
 
     ImageButton orangeButton;
     ImageButton blueButton;
@@ -94,18 +96,24 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         body.createFixture(fixtureDef);
         shape.dispose();
 
+        rectTexture = new Texture("rect.png");
+        rectSprite = new Sprite(rectTexture);
+
+        rectSprite.setPosition(Gdx.graphics.getWidth()/2-rectSprite.getWidth()/2,20);
+
         BodyDef bodyDef2 = new BodyDef();
         bodyDef2.type = BodyDef.BodyType.StaticBody;
 
-        float w = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
-        float h = Gdx.graphics.getHeight()/PIXELS_TO_METERS- 50/PIXELS_TO_METERS;
+        //float w = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
+        //float h = Gdx.graphics.getHeight()/PIXELS_TO_METERS- 50/PIXELS_TO_METERS;
 
-        bodyDef2.position.set(240/PIXELS_TO_METERS,0);
+        bodyDef2.position.set(Gdx.graphics.getWidth()/2/PIXELS_TO_METERS,40/PIXELS_TO_METERS);
         FixtureDef fixtureDef2 = new FixtureDef();
 
+        //rectSprite.setPosition(bodyDef2.position.x,bodyDef2.position.y);
 
         PolygonShape rect = new PolygonShape();
-        rect.setAsBox(480 / PIXELS_TO_METERS, 20 / PIXELS_TO_METERS);
+        rect.setAsBox(100 / PIXELS_TO_METERS, 20 / PIXELS_TO_METERS);
         fixtureDef2.shape = rect;
 
         bodyEdgeScreen = world.createBody(bodyDef2);
@@ -116,7 +124,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         // Create a Box2DDebugRenderer, this allows us to see the physics
         //simulation controlling the scene
-        //debugRenderer = new Box2DDebugRenderer();
+        debugRenderer = new Box2DDebugRenderer();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.
                 getHeight());
         camera.translate(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
@@ -154,8 +162,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         batch.setProjectionMatrix(camera.combined);
 
         // Scale down the sprite batches projection matrix to box2D size
-       // debugMatrix = batch.getProjectionMatrix().cpy().scale(PIXELS_TO_METERS,
-        //        PIXELS_TO_METERS, 0);
+       debugMatrix = batch.getProjectionMatrix().cpy().scale(PIXELS_TO_METERS,PIXELS_TO_METERS, 0);
 
         batch.begin();
 
@@ -164,7 +171,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
                     squareSprite.getOriginY(),
                     squareSprite.getWidth(),squareSprite.getHeight(),squareSprite.getScaleX(),squareSprite.
                             getScaleY(),squareSprite.getRotation());
-
+        batch.draw(rectSprite, rectSprite.getX(), rectSprite.getY());
         //System.out.println("square x: " + squareSprite.getX());
         //System.out.println("square y: " + squareSprite.getY());
 
@@ -178,7 +185,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Now render the physics world using our scaled down matrix
         // Note, this is strictly optional and is, as the name suggests, just
         //for debugging purposes
-        //debugRenderer.render(world, debugMatrix);
+        debugRenderer.render(world, debugMatrix);
         KeyClass.checkBoundsReset(body);
 	}
 
