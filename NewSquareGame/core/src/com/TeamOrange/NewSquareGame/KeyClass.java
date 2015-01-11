@@ -38,10 +38,14 @@ public class KeyClass {
         if  (test.x < 0){
             body.applyForceToCenter(Constants.REFLECTION, 0f, true);
         }*/
-        if (distance(starPosition, squarePosition) < 1)
+        // detects when star and square are in hitbox - john
+        if (distance(starPosition, squarePosition) < Constants.HITBOX_IN_METERS) {
+            // this is where to put what to do when the star and the square hit
             reset(square);
+        }
     }
 
+    // get distance between two points
     public static float distance(Vector2 object1, Vector2 object2){
         return (float) Math.sqrt(Math.pow((object1.x - object2.x),2) +
                 Math.pow((object1.y - object2.y),2));
