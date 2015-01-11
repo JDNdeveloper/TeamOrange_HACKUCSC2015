@@ -22,7 +22,7 @@ public class Constants {
     static float torque = 0.0f;
 
     static final float PIXELS_TO_METERS = 100f;
-    static final float HITBOX_IN_METERS = 1f;
+    static final float HITBOX_IN_METERS = 1.3f;
 
     static final String BACKGROUND = "bg.png";
     static final float BRED = 192/255f; //227
