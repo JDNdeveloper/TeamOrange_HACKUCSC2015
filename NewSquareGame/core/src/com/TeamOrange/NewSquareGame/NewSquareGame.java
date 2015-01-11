@@ -31,6 +31,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     ImageButton blueButton;
     ImageButton pinkButton;
     ImageButton greenButton;
+    CustomPhysics customPhysics;
 
     World world;
     Body body;
@@ -57,6 +58,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
 	@Override
 	public void create () {
+        customPhysics = new CustomPhysics();
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
 
@@ -205,22 +207,14 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         jumpDir = new Vector2(10,0);
-        if(screenX<screenWidth/4) {//left
-            jumpDir.setAngle(body.getAngle());
-            body.applyForceToCenter(jumpDir,true);
-            System.out.println("1");
-        }else if(screenX<screenWidth/2){//left middle
-            jumpDir.setAngle(body.getAngle() + 90);
-            body.applyForceToCenter(jumpDir,true);
-            System.out.println("2");
-        }else if(screenX<3*screenWidth/4){//right middle
-            jumpDir.setAngle(body.getAngle() + 180);
-            body.applyForceToCenter(jumpDir,true);
-            System.out.println("3");
-        }else{//right
-            jumpDir.setAngle(body.getAngle() + 270);
-            body.applyForceToCenter(jumpDir,true);
-            System.out.println("4");
+        if(orangeButton.mouseWithinRegion(screenX,screenY)) {//left
+            customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle()+180);
+        }else if(greenButton.mouseWithinRegion(screenX,screenY)){//left middle
+            customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle()+90);
+        }else if(pinkButton.mouseWithinRegion(screenX,screenY)){//right middle
+            customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle()+270);
+        }else if(blueButton.mouseWithinRegion(screenX,screenY)){//right
+            customPhysics.applyForceInDirection(body,JUMPFORCE,body.getAngle());
         }
         return true;
     }

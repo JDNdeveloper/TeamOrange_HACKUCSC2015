@@ -1,5 +1,6 @@
 package com.TeamOrange.NewSquareGame;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -29,12 +30,12 @@ public class ImageButton {
 
     public boolean mouseWithinRegion(float X, float Y) {
         mouseX = X;
-        mouseY = Y;
+        mouseY = Gdx.graphics.getHeight() - Y;
 
         float topRightX = image.getWidth() + imageX;
         float topRightY = image.getHeight() + imageY;
 
-
+        System.out.println("X "+ X + "Y " + mouseY);
         if (!(mouseX < topRightX && mouseX > imageX)) return false; //if x not in bounds
         if (!(mouseY < topRightY && mouseY > imageY)) return false; //if y not in bounds
 
