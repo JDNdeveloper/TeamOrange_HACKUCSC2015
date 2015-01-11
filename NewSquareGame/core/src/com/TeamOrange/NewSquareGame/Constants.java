@@ -7,7 +7,7 @@ public class Constants {
 
     static final float GRAVITY = -6.0f;
     static final float JUMPFORCE = 10.0f;
-    static final float REFLECTION = 5f;
+    static final float REFLECTION = 2.5f;
     static final float ZERO_ANG_VELOCITY = 0f;
     static final float DEFAULT_ANG_VELOCITY = 5f;
 

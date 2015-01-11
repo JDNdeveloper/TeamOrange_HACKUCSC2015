@@ -20,6 +20,7 @@ public class KeyClass {
     public static void checkBoundsReset(Body body){
         Transform bodyPosition = body.getTransform();
         Vector2 test = bodyPosition.getPosition();
+        Vector2 linearVelocity = body.getLinearVelocity();
 
 //        if (test.y < 0 || test.x < 0 || test.x > screenWidthMeters) {
 //            reset(body);
