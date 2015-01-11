@@ -17,7 +17,7 @@ public class KeyClass {
         return new Vector2(screenWidthMeters/2,screenHeightMeters/2);
     }
 
-    public static void checkBoundsReset(Square square){
+    public static void checkBoundsReset(Square square, Star star){
     //    Transform bodyPosition = square.getTransform();
         Vector2 squarePosition = square.getTransform().getPosition();
 //        Vector2 linearVelocity = square.getLinearVelocity();

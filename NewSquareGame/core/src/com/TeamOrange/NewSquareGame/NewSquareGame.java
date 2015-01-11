@@ -90,6 +90,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         levels = new Levels(world, batch);
 
         square = levels.getSquare();
+        star = levels.getStar();
 
 
 
@@ -184,7 +185,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Note, this is strictly optional and is, as the name suggests, just
         //for debugging purposes
         //debugRenderer.render(world, debugMatrix);
-        KeyClass.checkBoundsReset(square);
+        KeyClass.checkBoundsReset(square, star);
 	}
 
     @Override
