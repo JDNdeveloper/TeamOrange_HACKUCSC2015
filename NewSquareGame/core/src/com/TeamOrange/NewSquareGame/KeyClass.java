@@ -12,9 +12,8 @@ import com.badlogic.gdx.Graphics;
 
 public class KeyClass {
 
-    static final float PIXELS_TO_METERS = 100f;
-    static final float screenWidthMeters = Gdx.graphics.getWidth()/PIXELS_TO_METERS;
-    static final float screenHeightMeters = Gdx.graphics.getHeight()/PIXELS_TO_METERS;
+    static final float screenWidthMeters = Gdx.graphics.getWidth()/Constants.PIXELS_TO_METERS;
+    static final float screenHeightMeters = Gdx.graphics.getHeight()/Constants.PIXELS_TO_METERS;
 
     public static Vector2 screenCenter() {
         return new Vector2(screenWidthMeters/2,screenHeightMeters/2);
@@ -31,7 +30,7 @@ public class KeyClass {
 
     public static void reset(Body body) {
         body.setLinearVelocity(0f, 0f);
-        body.setAngularVelocity(0f);
+        body.setAngularVelocity(Constants.ZERO_ANG_VELOCITY);
         body.setTransform(screenCenter(), 0f);
     }
 }

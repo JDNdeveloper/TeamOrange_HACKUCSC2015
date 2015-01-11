@@ -7,6 +7,8 @@ public class Constants {
 
     static final float GRAVITY = -6.0f;
     static final float JUMPFORCE = 10.0f;
+    static final float ZERO_ANG_VELOCITY = 0f;
+    static final float DEFAULT_ANG_VELOCITY = 5f;
 
     static final float buttonPaddingX = 32;
     static final float buttonPaddingY = 32;
