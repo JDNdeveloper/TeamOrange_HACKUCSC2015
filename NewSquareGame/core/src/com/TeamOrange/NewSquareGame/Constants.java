@@ -22,4 +22,6 @@ public class Constants {
     static float torque = 0.0f;
 
     static final float PIXELS_TO_METERS = 100f;
+
+    static final String BACKGROUND = "rect.png";
 }

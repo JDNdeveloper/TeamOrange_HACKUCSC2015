@@ -179,6 +179,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         batch.begin();
 
+        batch.draw(new Texture(Constants.BACKGROUND),0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         if(drawSprite)
             batch.draw(squareSprite, squareSprite.getX(), squareSprite.getY(),squareSprite.getOriginX(),
                     squareSprite.getOriginY(),
@@ -202,7 +204,6 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         }
 
         batch.end();
-
 
         // Now render the physics world using our scaled down matrix
         // Note, this is strictly optional and is, as the name suggests, just
