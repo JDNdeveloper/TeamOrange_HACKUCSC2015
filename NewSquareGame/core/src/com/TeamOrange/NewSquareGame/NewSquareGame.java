@@ -187,6 +187,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         //for debugging purposes
         debugRenderer.render(world, debugMatrix);
         KeyClass.checkBoundsReset(body);
+        Transform bodyPosition = body.getTransform();
+        //System.out.println(bodyPosition.getPosition().x);
 	}
 
     @Override
