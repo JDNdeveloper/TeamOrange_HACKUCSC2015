@@ -183,9 +183,9 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.SPACE){
             body.setLinearVelocity(0f, 0f);
-        body.setAngularVelocity(0f);
-        squareSprite.setPosition(0f, 0f);
-        body.setTransform(0f, 0f, 0f);
+            body.setAngularVelocity(0f);
+            squareSprite.setPosition(0f, 0f);
+            body.setTransform(KeyClass.screenCenter(), 0f);
         }
         return true;
     }
@@ -245,14 +245,12 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     public void checkBoundsReset(){
         bodyPosition = body.getTransform();
-        Vector2 test= bodyPosition.getPosition();
-        //System.out.println(test.x);
-        if(test.x>3*screenWidth/4) {
+        Vector2 test = bodyPosition.getPosition();
+
+        if (test.y < 0 || test.x < 0 || test.x/PIXELS_TO_METERS > screenWidth) {
             body.setLinearVelocity(0f, 0f);
             body.setAngularVelocity(0f);
-            squareSprite.setPosition(0f,0f);
-            body.setTransform(0f,0f,0f);
-            //System.out.println(bodyPosition.x);
+            body.setTransform(KeyClass.screenCenter(), 0f);
         }
     }
 }
