@@ -5,10 +5,8 @@ package com.TeamOrange.NewSquareGame;
  */
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.Graphics;
 
 public class KeyClass {
 
