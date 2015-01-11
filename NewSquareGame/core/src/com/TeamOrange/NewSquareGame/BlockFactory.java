@@ -23,10 +23,10 @@ public class BlockFactory {
         public Block(Texture tex, World world, Vector2 bottomLeftCorner) {
             texture = tex;
             sprite = new Sprite(texture);
-            sprite.setPosition(-sprite.getWidth() / 2, -sprite.getHeight() / 2);
+            sprite.setPosition(bottomLeftCorner.x, bottomLeftCorner.y);
             BodyDef bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set(KeyClass.screenWidthMeters / 2, KeyClass.screenHeightMeters / 2);
+            bodyDef.position.set(bottomLeftCorner.x, bottomLeftCorner.y);
 
             body = world.createBody(bodyDef);
 
