@@ -48,17 +48,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     float screenHeight;
     boolean paused;
 
-//    final float GRAVITY = -6.0f;
-//    final float JUMPFORCE = 10.0f;
-
-//    final float buttonPaddingX = 32;
-//    final float buttonPaddingY = 32;
-//    final float diagonalButtonOffset = 96;
-
-//    float torque = 0.0f;
     boolean drawSprite = true;
-
-//    final float PIXELS_TO_METERS = 100f;
 
 	@Override
 	public void create () {
@@ -223,21 +213,24 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (orangeButton.mouseWithinRegion(screenX, screenY)) {//left
-            customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, (float) (body.getAngle() + Math.PI));
-            //System.out.println(body.getAngle() + Math.toRadians(180));
-        } else if (greenButton.mouseWithinRegion(screenX, screenY)){//left middle
-            customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, (float) (body.getAngle() + Math.PI/2));
-           // System.out.println(body.getAngle()+Math.toRadians(90));
-        } else if (pinkButton.mouseWithinRegion(screenX, screenY)){//right middle
-            customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, (float) (body.getAngle() + 3 * Math.PI / 2));
-           // System.out.println(body.getAngle()+Math.toRadians(270));
-        } else if (blueButton.mouseWithinRegion(screenX, screenY)){//right
-            customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, body.getAngle());
-           // System.out.println(body.getAngle());
-        } else if (pauseButton.mouseWithinRegion(screenX, screenY)) {
+        if (pauseButton.mouseWithinRegion(screenX, screenY)) {
             paused = !paused;
             System.out.println("paused: " + paused);
+        }
+        if (!paused) {
+            if (orangeButton.mouseWithinRegion(screenX, screenY)) {//left
+                customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, (float) (body.getAngle() + Math.PI));
+                //System.out.println(body.getAngle() + Math.toRadians(180));
+            } else if (greenButton.mouseWithinRegion(screenX, screenY)) {//left middle
+                customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, (float) (body.getAngle() + Math.PI / 2));
+                // System.out.println(body.getAngle()+Math.toRadians(90));
+            } else if (pinkButton.mouseWithinRegion(screenX, screenY)) {//right middle
+                customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, (float) (body.getAngle() + 3 * Math.PI / 2));
+                // System.out.println(body.getAngle()+Math.toRadians(270));
+            } else if (blueButton.mouseWithinRegion(screenX, screenY)) {//right
+                customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, body.getAngle());
+                // System.out.println(body.getAngle());
+            }
         }
         return true;
     }
