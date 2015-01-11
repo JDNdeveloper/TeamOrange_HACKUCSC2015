@@ -170,7 +170,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Ditto for rotation
         squareSprite.setRotation((float)Math.toDegrees(body.getAngle()));
 
-        Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
+        Gdx.gl.glClearColor(Constants.BRED, Constants.BGREEN, Constants.BBLUE, Constants.BALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camera.combined);
@@ -179,7 +179,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         batch.begin();
 
-        batch.draw(new Texture(Constants.BACKGROUND),0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//      batch.draw(new Texture(Constants.BACKGROUND),0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         if(drawSprite)
             batch.draw(squareSprite, squareSprite.getX(), squareSprite.getY(),squareSprite.getOriginX(),
