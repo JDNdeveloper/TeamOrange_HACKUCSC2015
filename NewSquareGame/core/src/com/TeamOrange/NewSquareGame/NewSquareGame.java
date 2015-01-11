@@ -173,7 +173,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         if (!paused) {
             camera.update();
             // Step the physics simulation forward at a rate of 60hz
-            world.step(1f / 60f, 6, 2);
+            world.step(Constants.TIME_STEP, Constants.VELOCITY_INTERATIONS, Constants.POSITION_ITERATIONS);
         }
         // Apply torque to the physics body.  At start this is 0 and will do
        // nothing.  Controlled with [] keys
@@ -230,7 +230,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         //for debugging purposes
         //debugRenderer.render(world, debugMatrix);
         KeyClass.checkBoundsReset(body);
-        Transform bodyPosition = body.getTransform();
+//        Transform bodyPosition = body.getTransform();
         //System.out.println(bodyPosition.getPosition().x);
 	}
 
