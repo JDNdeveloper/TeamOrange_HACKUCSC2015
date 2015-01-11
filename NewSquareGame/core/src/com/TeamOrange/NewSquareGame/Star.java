@@ -29,8 +29,8 @@ public class Star {
             sprite = new Sprite(texture);
             sprite.setPosition(x, y);
             BodyDef bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((bottomLeftCorner.x + sprite.getWidth() /2) / Constants.PIXELS_TO_METERS, (bottomLeftCorner.y + sprite.getHeight() / 2) / Constants.PIXELS_TO_METERS);
+            bodyDef.type = BodyDef.BodyType.DynamicBody;
+            bodyDef.position.set((x + sprite.getWidth() /2) / Constants.PIXELS_TO_METERS, (y + sprite.getHeight() / 2) / Constants.PIXELS_TO_METERS);
 
             body = world.createBody(bodyDef);
 
@@ -48,7 +48,13 @@ public class Star {
 
     public void act(){
         rotation++;
-        if(scale>=1&&!scaleFlip){
+        if(scale<=1f&&!scaleFlip){
+            scale -= 0.01f;
+        }if(scale<0.6f){
+            scaleFlip = true;
+        }if(scaleFlip&&scale<1f){
+            scale += 0.01f;
+        }if(scale>=1f){
             scaleFlip = false;
         }
     }
@@ -56,7 +62,8 @@ public class Star {
     public void draw(SpriteBatch batch){
          batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(),
                 sprite.getOriginY(),
-                sprite.getWidth(),sprite.getHeight(),sprite.getScaleX(),sp.
-                        getScaleY(),squareSprite.getRotation());
+                sprite.getWidth(),sprite.getHeight(),scale,scale,rotation);
     }
+
+
 }

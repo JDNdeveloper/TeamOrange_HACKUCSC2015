@@ -1,0 +1,4 @@
+star = new Star(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/1.5f,world);
+        star.act();
+
+        star.draw(batch);

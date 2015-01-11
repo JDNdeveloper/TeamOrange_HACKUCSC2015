@@ -51,6 +51,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     float screenWidth;
     float screenHeight;
     boolean paused;
+    Star star;
 
     boolean drawSprite = true;
 
