@@ -43,6 +43,6 @@ public class KeyClass {
     public static void reset(Square square) {
         square.setLinearVelocity(0f, 0f);
         square.setAngularVelocity(Constants.ZERO_ANG_VELOCITY);
-        square.setTransform(screenCenter(), 0f);
+        square.setTransform(new Vector2((square.x + square.getWidth() /2) / Constants.PIXELS_TO_METERS, (square.y + square.getHeight() /2) / Constants.PIXELS_TO_METERS), 0f);
     }
 }

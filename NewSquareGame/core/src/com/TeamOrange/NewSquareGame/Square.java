@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Transform;
@@ -20,16 +21,28 @@ public class Square {
     FixtureDef fixtureDef;
     Body body;
 
-    public Square(Body _body) {
-        body = _body;
+    public float x;
+    public float y;
+
+    public Square(World world, float _x, float _y) {
+        x = _x;
+        y = _y;
 
         sprite = new Sprite(new Texture("square.png"));
         dimensions = new Vector2(sprite.getWidth(), sprite.getHeight());
-        sprite.setPosition(-dimensions.x/2, -dimensions.y/2);
+        sprite.setPosition(x, y);
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set((x + sprite.getWidth() /2) / Constants.PIXELS_TO_METERS, (y + sprite.getHeight() / 2) / Constants.PIXELS_TO_METERS);
+
+        body = world.createBody(bodyDef);
+
+
 
         shape = new PolygonShape();
-        shape.setAsBox(dimensions.x/2 / Constants.PIXELS_TO_METERS,
-                       dimensions.y/2 / Constants.PIXELS_TO_METERS);
+        shape.setAsBox(sprite.getWidth() / 2 / Constants.PIXELS_TO_METERS,
+                sprite.getHeight() / 2 / Constants.PIXELS_TO_METERS);
 
         fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

@@ -86,15 +86,12 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         overlay = new Sprite(new Texture("pauseGradient.png"), (int)screenWidth, (int)screenHeight);
 
         world = new World(new Vector2(0, Constants.GRAVITY), true);
-        levels = new Levels(world, batch);
         batch = new SpriteBatch();
+        levels = new Levels(world, batch);
 
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(KeyClass.screenCenter());
+        square = levels.getSquare();
 
-        body = world.createBody(bodyDef);
-        square = new Square(body);
+
 
         /*rectTexture = new Texture("rect.png");
         rectSprite = new Sprite(rectTexture);
@@ -116,7 +113,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         rect.dispose();
         */
 
-        star = new Star(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.5f, world);
+        //star = new Star(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.5f, world);
 
         Gdx.input.setInputProcessor(this);
 
@@ -193,9 +190,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.SPACE){
-            square.setLinearVelocity(0f, 0f);
-            square.setAngularVelocity(0f);
-            square.setTransform(KeyClass.screenCenter(), 0f);
+            KeyClass.reset(square);
         }
 
         if (keycode == Input.Keys.UP){

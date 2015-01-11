@@ -24,7 +24,7 @@ public class Levels {
     private class Level {
         BlockFactory BF;
         Star star;
-        //Square square;
+        Square square;
 
         public Level() {
             BF = new BlockFactory();
@@ -53,9 +53,9 @@ public class Levels {
         l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*1 + 30 + padding, 70 + BlockHeight + 3*BlockWidth/2 + padding), world);
         l1.BF.makeRectangle(false, "rect.png", new Vector2(70 + BlockWidth*2 + 30 + padding, 70 + BlockHeight + 3*BlockWidth/2 + padding), world);
 
-        //l1.square = new Square(world, 70 + BlockWidth*2 - 50, 70 + BlockHeight + 50);
+        l1.square = new Square(world, 70 + BlockWidth*1 + padding, 70 + BlockHeight + 50 + padding);
 
-        l1.star = new Star(70 + BlockWidth*2 + 45 + padding, 70 + BlockHeight*1 + 20 + padding, world);
+        l1.star = new Star(70 + BlockWidth*2 + 60 + padding, 70 + BlockHeight*1 + 20 + padding, world);
 
 
 
@@ -66,11 +66,13 @@ public class Levels {
     public void drawCurrentLevel() {
         Level cLevel = levels.get(currentLevel);
 
-//        cLevel.BF.drawRects(batch);
-//        cLevel.star.act();
-//        cLevel.star.draw(batch);
+        cLevel.BF.drawRects(batch);
+        cLevel.star.act();
+        cLevel.star.draw(batch);
     }
 
-
+    public Square getSquare() {
+        return levels.get(currentLevel).square;
+    }
 
 }
