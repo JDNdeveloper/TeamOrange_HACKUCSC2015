@@ -66,10 +66,9 @@ public class Levels {
     public void drawCurrentLevel() {
         Level cLevel = levels.get(currentLevel);
 
-
-        cLevel.BF.drawRects(batch);
-        cLevel.star.act();
-        cLevel.star.draw(batch);
+//        cLevel.BF.drawRects(batch);
+//        cLevel.star.act();
+//        cLevel.star.draw(batch);
     }
 
 

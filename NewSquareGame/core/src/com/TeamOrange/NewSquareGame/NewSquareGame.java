@@ -53,7 +53,7 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
     World world;
     Body body;
-    Transform bodyPosition;
+    Square square;
     Body bodyEdgeScreen;
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugMatrix;
@@ -85,37 +85,16 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         overlay = new Sprite(new Texture("pauseGradient.png"), (int)screenWidth, (int)screenHeight);
 
-        bodyPosition = new Transform();
-
-        batch = new SpriteBatch();
-        squareTexture = new Texture("square.png");
-        squareSprite = new Sprite(squareTexture);
-
-        squareSprite.setPosition(-squareSprite.getWidth()/2,-squareSprite.getHeight()/2);
-
-        world = new World(new Vector2(0, Constants.GRAVITY),true);
-
-
+        world = new World(new Vector2(0, Constants.GRAVITY), true);
         levels = new Levels(world, batch);
+        batch = new SpriteBatch();
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(KeyClass.screenCenter());
 
         body = world.createBody(bodyDef);
-        paused = false;
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(squareSprite.getWidth()/2 / Constants.PIXELS_TO_METERS, squareSprite.getHeight()
-                /2 / Constants.PIXELS_TO_METERS);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 0.05f;
-        fixtureDef.restitution = 0f;
-
-        body.createFixture(fixtureDef);
-        shape.dispose();
+        square = new Square(body);
 
         /*rectTexture = new Texture("rect.png");
         rectSprite = new Sprite(rectTexture);
@@ -137,16 +116,17 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         rect.dispose();
         */
 
-        star = new Star(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/1.5f,world);
+        star = new Star(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.5f, world);
 
         Gdx.input.setInputProcessor(this);
 
         // Create a Box2DDebugRenderer, this allows us to see the physics
         //simulation controlling the scene
         //debugRenderer = new Box2DDebugRenderer();
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.
-                getHeight());
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.translate(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+
+        paused = false;
 	}
 
     private float elapsed = 0;
@@ -161,15 +141,12 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Apply torque to the physics body.  At start this is 0 and will do
        // nothing.  Controlled with [] keys
         // Torque is applied per frame instead of just once
-        body.applyTorque(Constants.torque,true);
+        square.applyTorque(Constants.torque, true);
 
-        // Set the sprite's position from the updated physics body location
-        squareSprite.setPosition((body.getPosition().x * Constants.PIXELS_TO_METERS) - squareSprite.
-                        getWidth()/2 ,
-                (body.getPosition().y * Constants.PIXELS_TO_METERS) -squareSprite.getHeight()/2 )
-        ;
-        // Ditto for rotation
-        squareSprite.setRotation((float)Math.toDegrees(body.getAngle()));
+        // Set the square's position from the updated physics body location
+        square.setPosition((square.getPosition().x * Constants.PIXELS_TO_METERS) - square.getWidth()/2,
+                (square.getPosition().y * Constants.PIXELS_TO_METERS) - square.getHeight()/2);
+        square.setRotation((float) Math.toDegrees(square.getAngle()));
 
         Gdx.gl.glClearColor(Constants.BRED, Constants.BGREEN, Constants.BBLUE, Constants.BALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -185,11 +162,9 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
 
         levels.drawCurrentLevel();
 
-        if(drawSprite)
-            batch.draw(squareSprite, squareSprite.getX(), squareSprite.getY(),squareSprite.getOriginX(),
-                    squareSprite.getOriginY(),
-                    squareSprite.getWidth(),squareSprite.getHeight(),squareSprite.getScaleX(),squareSprite.
-                            getScaleY(),squareSprite.getRotation());
+        if (drawSprite)
+            square.draw(batch);
+
 
         //star.draw(batch);
 
@@ -212,20 +187,19 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         // Note, this is strictly optional and is, as the name suggests, just
         //for debugging purposes
         //debugRenderer.render(world, debugMatrix);
-        KeyClass.checkBoundsReset(body);
+        KeyClass.checkBoundsReset(square);
 	}
 
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.SPACE){
-            body.setLinearVelocity(0f, 0f);
-            body.setAngularVelocity(0f);
-            squareSprite.setPosition(0f, 0f);
-            body.setTransform(KeyClass.screenCenter(), 0f);
+            square.setLinearVelocity(0f, 0f);
+            square.setAngularVelocity(0f);
+            square.setTransform(KeyClass.screenCenter(), 0f);
         }
 
         if (keycode == Input.Keys.UP){
-            body.setAngularVelocity(1f);
+            square.setAngularVelocity(1f);
         }
         return true;
     }
@@ -246,17 +220,17 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
             paused = !paused;
         }
         if (resetButton.mouseWithinRegion(screenX, screenY)) {
-            KeyClass.reset(body);
+            KeyClass.reset(square);
         }
         if (!paused) {
             if (orangeButton.mouseWithinRegion(screenX, screenY)) {//left
-                customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, (float) (body.getAngle() + Math.PI));
+                customPhysics.applyForceInDirection(square, Constants.JUMPFORCE, (float) (square.getAngle() + Math.PI));
             } else if (greenButton.mouseWithinRegion(screenX, screenY)) {//left middle
-                customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, (float) (body.getAngle() + Math.PI / 2));
+                customPhysics.applyForceInDirection(square, Constants.JUMPFORCE, (float) (square.getAngle() + Math.PI / 2));
             } else if (pinkButton.mouseWithinRegion(screenX, screenY)) {//right middle
-                customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, (float) (body.getAngle() + 3 * Math.PI / 2));
+                customPhysics.applyForceInDirection(square, Constants.JUMPFORCE, (float) (square.getAngle() + 3 * Math.PI / 2));
             } else if (blueButton.mouseWithinRegion(screenX, screenY)) {//right
-                customPhysics.applyForceInDirection(body, Constants.JUMPFORCE, body.getAngle());
+                customPhysics.applyForceInDirection(square, Constants.JUMPFORCE, square.getAngle());
             }
         }
         return true;
