@@ -57,7 +57,12 @@ public class BlockFactory {
     }
 
     public void makeRectangle(boolean vertical, String image, Vector2 bottomLeftCorner, World world) {
-        Block block = new Block(new Texture("rect.png"), world, bottomLeftCorner);
+        Block block;
+        if (!vertical) {
+            block = new Block(new Texture("rect.png"), world, bottomLeftCorner);
+        } else {
+            block = new Block(new Texture("rectVert.png"), world, bottomLeftCorner);
+        }
         blocks.add(block);
     }
 
