@@ -34,7 +34,9 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
     ImageButton blueButton;
     ImageButton pinkButton;
     ImageButton greenButton;
+
     ImageButton pauseButton;
+    ImageButton resetButton;
     CustomPhysics customPhysics;
 
     World world;
@@ -55,13 +57,18 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         customPhysics = new CustomPhysics();
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
+
         Texture pauseTexture = new Texture("pause.png");
+        Texture resetTexture = new Texture("reset.png");
 
         orangeButton = new ImageButton("orangeButton.png", Constants.buttonPaddingX, Constants.buttonPaddingY + Constants.diagonalButtonOffset);
         greenButton = new ImageButton("greenButton.png", Constants.buttonPaddingX*2 + orangeButton.getWidth(), Constants.buttonPaddingY);
         blueButton = new ImageButton("blueButton.png", screenWidth - Constants.buttonPaddingX - greenButton.getWidth(), Constants.buttonPaddingY + Constants.diagonalButtonOffset); //bad...
         pinkButton = new ImageButton("pinkButton.png", screenWidth - Constants.buttonPaddingX * 2 - blueButton.getWidth()*2, Constants.buttonPaddingY);
-        pauseButton = new ImageButton("pause.png", pauseTexture.getWidth(), screenHeight - 1.5f*pauseTexture.getHeight());
+
+        resetButton = new ImageButton("reset.png", resetTexture.getWidth() + pauseTexture.getWidth() + 15, screenHeight - 1.5f*pauseTexture.getHeight() - 3);
+        pauseButton = new ImageButton("pause.png", pauseTexture.getWidth() - 10, screenHeight - 1.5f*pauseTexture.getHeight());
+
         bodyPosition = new Transform();
 
         batch = new SpriteBatch();
@@ -175,6 +182,8 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         batch.draw(blueButton.getTexture(), blueButton.getX(), blueButton.getY());
         batch.draw(pinkButton.getTexture(), pinkButton.getX(), pinkButton.getY());
         batch.draw(greenButton.getTexture(), greenButton.getX(), greenButton.getY());
+
+        batch.draw(resetButton.getTexture(), resetButton.getX(), resetButton.getY());
         batch.draw(pauseButton.getTexture(), pauseButton.getX(), pauseButton.getY());
 
         batch.end();
@@ -218,6 +227,9 @@ public class NewSquareGame extends ApplicationAdapter implements InputProcessor 
         if (pauseButton.mouseWithinRegion(screenX, screenY)) {
             paused = !paused;
             System.out.println("paused: " + paused);
+        }
+        if (resetButton.mouseWithinRegion(screenX, screenY)) {
+            KeyClass.reset(body);
         }
         if (!paused) {
             if (orangeButton.mouseWithinRegion(screenX, screenY)) {//left
